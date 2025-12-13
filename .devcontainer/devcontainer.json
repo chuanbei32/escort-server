@@ -1,0 +1,17 @@
+{
+	"name": "escort",
+	"service": "php",
+	"dockerComposeFile": "docker-compose.yml",
+	"workspaceFolder": "/workspace",
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+//				"bmewburn.vscode-intelephense-client",
+				"xdebug.php-debug",
+				"DEVSENSE.composer-php-vscode",
+//				"recca0120.vscode-phpunit",
+			]
+		}
+	}
+}

@@ -1,0 +1,65 @@
+FROM shinsenter/php:8.4-cli
+
+RUN apt-get update
+
+# ARG USERNAME=coder
+# ARG USER_UID=1000
+# ARG USER_GID=$USER_UID
+
+# RUN apt-get install -y fish sudo \
+#         && echo 'root:oot' | chpasswd \
+#         && groupadd --gid $USER_GID $USERNAME \
+#         && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/fish \
+#         && echo 'coder:oder' | chpasswd \
+#         && echo $USERNAME ALL=\(ALL:ALLw\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+#         && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# RUN apt-get install -y openssh-client openssh-server \
+#         && mkdir /var/run/sshd \
+#         && sed -i 's/#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
+#         && sed -i 's/#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config \
+#         && ssh-keygen -A
+#         # echo "你的公钥内容" > /root/.ssh/authorized_keys && \
+#         # chmod 600 /root/.ssh/authorized_keys && \
+#         # chmod 700 /root/.ssh
+
+RUN apt-get install -y \
+        gnupg \
+        wget \
+        curl \
+        vim \
+        git
+
+RUN phpaddmod gnupg xdebug
+
+# RUN wget -O phive.phar "https://phar.io/releases/phive.phar" \
+#     # && wget -O phive.phar.asc "https://phar.io/releases/phive.phar.asc" \
+#     # && gpg --keyserver hkps://keys.openpgp.org --recv-keys 0x6AF725270AB81E04D79442549D8A98B29B2D5D79 \
+#     # && gpg --verify phive.phar.asc phive.phar \
+#     # && rm phive.phar.asc \
+#     && chmod +x phive.phar \
+#     && mv phive.phar /usr/local/bin/phive
+
+# ENV APP_USER=coder
+# ENV APP_GROUP=coder
+# ENV APP_UID=1000
+# ENV APP_GID=1000
+ENV APP_PATH=/workspace
+
+ENV MEMORY_LIMIT=-1
+ENV PHP_ERROR_REPORTING=-1
+ENV PHP_XDEBUG_START_WITH_REQUEST=yes
+ENV PHP_XDEBUG_MODE=develop,debug,trace,coverage
+ENV PHP_XDEBUG_DISCOVER_CLIENT_HOST=true
+# ENV PHP_XDEBUG_CLIENT_HOST=host.docker.internal
+# ENV PHP_XDEBUG_CLIENT_HOST=192.168.1.151
+ENV PHP_XDEBUG_CLIENT_PORT=9003
+ENV PHP_XDEBUG_LOG=/tmp/xdebug.log
+ENV PHP_XDEBUG_LOG_LEVEL=7
+
+
+# WORKDIR ${APP_PATH}
+WORKDIR ${APP_PATH}
+
+CMD ["tail", "-f", "/dev/null"]
+# CMD ["/usr/sbin/sshd", "-D"]

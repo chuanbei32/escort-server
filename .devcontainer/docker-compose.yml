@@ -1,0 +1,30 @@
+services: 
+  php:
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - ../:/workspace:cached
+    networks:
+      - escort
+    ports:
+      - "0:8000"
+  mysql:
+    image: mysql:8
+    volumes:
+      - mysql-escort:/var/lib/mysql
+    networks:
+      - escort
+    ports:
+      - "0:3306"    
+    environment:
+      MYSQL_ROOT_PASSWORD: oot
+      MYSQL_USER: oder
+      MYSQL_PASSWORD: oder
+      
+networks:
+  escort:
+    driver: bridge
+
+volumes:
+  mysql-escort:
