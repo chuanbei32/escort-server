@@ -27,7 +27,7 @@ class Payment extends Base
             return $this->error('订单ID不能为空');
         }
 
-        $data = $this->service->wxpay(['order_id' => $orderId]);
+        $data = $this->service->wxpay($this->getUid(), ['order_id' => $orderId]);
         return $this->success($data);
     }
 }

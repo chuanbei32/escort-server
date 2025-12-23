@@ -22,8 +22,7 @@ class Order extends Base
      */
     public function list(): Response
     {
-        // 假设当前用户ID为1
-        $userId = 1;
+        $userId = $this->getUid();
         $page = $this->request->get('page/d', 1);
         $limit = $this->request->get('page_size/d', 10);
         
@@ -38,8 +37,7 @@ class Order extends Base
      */
     public function detail(int $id): Response
     {
-        // 假设当前用户ID为1
-        $userId = 1;
+        $userId = $this->getUid();
         $info = $this->service->getOrderDetail($id, $userId);
         if (!$info) {
             return $this->error('订单不存在');

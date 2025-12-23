@@ -28,7 +28,7 @@ class EscortApply extends Base
             return $this->error('姓名和电话不能为空');
         }
 
-        $res = $this->service->apply($data);
+        $res = $this->service->apply($this->getUid(), $data);
         return $this->success($res, '申请已提交');
     }
 
@@ -54,7 +54,7 @@ class EscortApply extends Base
             return $this->error('姓名和电话不能为空');
         }
 
-        $res = $this->service->recruitApply($data);
+        $res = $this->service->recruitApply($this->getUid(), $data);
         return $this->success($res, '招聘申请已提交');
     }
 }

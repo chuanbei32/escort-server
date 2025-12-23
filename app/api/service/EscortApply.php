@@ -10,11 +10,13 @@ class EscortApply
 {
     /**
      * 申请成为陪诊师
+     * @param int   $userId
      * @param array $data
      * @return EscortApplyModel
      */
-    public function apply(array $data): EscortApplyModel
+    public function apply(int $userId, array $data): EscortApplyModel
     {
+        $data['user_id'] = $userId;
         return EscortApplyModel::create($data);
     }
 

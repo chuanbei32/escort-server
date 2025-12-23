@@ -38,7 +38,7 @@ class Appointment extends Base
             return $this->error('缺少必要参数');
         }
 
-        $res = $this->service->create($params);
+        $res = $this->service->create($this->getUid(), $params);
         return $this->success($res);
     }
 }

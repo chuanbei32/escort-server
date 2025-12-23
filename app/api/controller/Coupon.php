@@ -22,8 +22,7 @@ class Coupon extends Base
      */
     public function list(): Response
     {
-        // 假设当前用户ID为1
-        $userId = 1;
+        $userId = $this->getUid();
         $status = $this->request->get('status/d', 1);
         
         $data = $this->service->getCouponList($userId, $status);

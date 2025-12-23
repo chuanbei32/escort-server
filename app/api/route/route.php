@@ -4,6 +4,8 @@ declare (strict_types = 1);
 use think\facade\Route;
 
 Route::group('v1', function () {
+    // --- 公开接口 ---
+    
     // 登录模块
     Route::group('login', function () {
         Route::post('wechat', 'Login/wechat');
@@ -31,42 +33,43 @@ Route::group('v1', function () {
         Route::get('detail/:id', 'Service/detail');
     });
 
-    // 预约模块
-    Route::group('appointment', function () {
-        Route::post('create', 'Appointment/create');
-    });
+    // 协议
+    Route::get('escort/protocol', 'EscortApply/protocol');
 
-    // 支付模块
-    Route::group('payment', function () {
-        Route::post('wxpay', 'Payment/wxpay');
-    });
+    // --- 需授权接口 ---
+    Route::group('', function () {
+        // 预约模块
+        Route::group('appointment', function () {
+            Route::post('create', 'Appointment/create');
+        });
 
-    // 订单模块
-    Route::group('order', function () {
-        Route::get('list', 'Order/list');
-        Route::get('detail/:id', 'Order/detail');
-    });
+        // 支付模块
+        Route::group('payment', function () {
+            Route::post('wxpay', 'Payment/wxpay');
+        });
 
-    // 个人中心/用户模块
-    Route::group('user', function () {
-        Route::get('info', 'User/info');
-        Route::post('update', 'User/update');
-        Route::get('edit-info', 'User/editInfo');
-    });
+        // 订单模块
+        Route::group('order', function () {
+            Route::get('list', 'Order/list');
+            Route::get('detail/:id', 'Order/detail');
+        });
 
-    // 陪诊师申请模块
-    Route::group('escort', function () {
-        Route::post('apply', 'EscortApply/apply');
-        Route::get('protocol', 'EscortApply/protocol');
-    });
+        // 个人中心/用户模块
+        Route::group('user', function () {
+            Route::get('info', 'User/info');
+            Route::post('update', 'User/update');
+            Route::get('edit-info', 'User/editInfo');
+        });
 
-    // 招聘陪诊师模块
-    Route::group('recruit', function () {
-        Route::post('apply', 'EscortApply/recruitApply');
-    });
+        // 陪诊师申请
+        Route::post('escort/apply', 'EscortApply/apply');
 
-    // 优惠券模块
-    Route::group('coupon', function () {
-        Route::get('list', 'Coupon/list');
-    });
+        // 招聘陪诊师申请
+        Route::post('recruit/apply', 'EscortApply/recruitApply');
+
+        // 优惠券模块
+        Route::group('coupon', function () {
+            Route::get('list', 'Coupon/list');
+        });
+    })->middleware(\app\api\middleware\Auth::class);
 });

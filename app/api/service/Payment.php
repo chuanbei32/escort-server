@@ -7,12 +7,14 @@ class Payment
 {
     /**
      * 微信支付
+     * @param int   $userId
      * @param array $data
      * @return array
      */
-    public function wxpay(array $data): array
+    public function wxpay(int $userId, array $data): array
     {
         // 模拟生成支付参数
+        // 实际逻辑中应校验该订单是否属于该用户
         return [
             'timeStamp' => (string)time(),
             'nonceStr'  => uniqid(),

@@ -46,6 +46,14 @@ class Base extends BaseController
     }
 
     /**
+     * 获取当前登录用户ID
+     */
+    protected function getUid(): int
+    {
+        return (int) $this->request->user_id;
+    }
+
+    /**
      * 获取当前响应类型
      * @return string
      */

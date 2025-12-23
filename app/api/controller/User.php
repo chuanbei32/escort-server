@@ -22,8 +22,7 @@ class User extends Base
      */
     public function info(): Response
     {
-        // 假设当前用户ID为1
-        $userId = 1;
+        $userId = $this->getUid();
         $info = $this->service->getUserInfo($userId);
         return $this->success($info);
     }
@@ -51,8 +50,7 @@ class User extends Base
      */
     public function editInfo(): Response
     {
-        // 假设当前用户ID为1
-        $userId = 1;
+        $userId = $this->getUid();
         $info = $this->service->getUserInfo($userId);
         return $this->success($info);
     }
