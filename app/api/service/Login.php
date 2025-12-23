@@ -1,0 +1,60 @@
+<?php
+declare (strict_types = 1);
+
+namespace app\api\service;
+
+use app\api\model\User as UserModel;
+use EasyWeChat\Factory;
+use thans\jwt\facade\JWTAuth;
+use think\facade\Config;
+
+class Login
+{
+    /**
+     * 微信登录
+     * @param string $code
+     * @return array
+     */
+    public function wechatLogin(string $code): array
+    {
+        // 1. 获取微信配置 (实际应用中应从配置文件读取)
+        $config = [
+            'app_id' => Config::get('wechat.mini_program.app_id'),
+            'secret' => Config::get('wechat.mini_program.secret'),
+        ];
+
+        // 2. 初始化小程序实例
+        $app = Factory::miniProgram($config);
+
+        // 3. 通过 code 换取 openid
+        $auth = $app->auth->session($code);
+        
+        if (isset($auth['errcode']) && $auth['errcode'] !== 0) {
+            throw new \Exception('微信登录失败：' . ($auth['errmsg'] ?? '未知错误'));
+        }
+
+        $openid = $auth['openid'];
+
+        // 4. 查找或创建用户
+        $user = UserModel::where('openid', $openid)->find();
+        if (!$user) {
+            $user = UserModel::create([
+                'openid' => $openid,
+                'status' => 1,
+                // 初始昵称和头像可以先设为空或默认值
+                'nickname' => '用户' . substr($openid, -6),
+            ]);
+        }
+
+        // 5. 生成 JWT Token
+        $token = JWTAuth::builder([
+            'uid' => $user->id,
+            'openid' => $openid,
+        ]);
+
+        return [
+            'user'  => $user,
+            'token' => $token,
+        ];
+    }
+}

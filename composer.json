@@ -39,7 +39,9 @@
         "wolfcode/php-ai": "^0.1.2",
         "ext-json": "*",
         "ext-mysqli": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "thans/tp-jwt-auth": "^2.0",
+        "overtrue/wechat": "~5.0"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",
