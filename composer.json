@@ -41,7 +41,8 @@
         "ext-mysqli": "*",
         "ext-pdo": "*",
         "thans/tp-jwt-auth": "^2.0",
-        "w7corp/easywechat": "^6.19"
+        "w7corp/easywechat": "^6.19",
+        "symfony/http-client": ">=7.2"
     },
     "require-dev": {
         "symfony/var-dumper": ">=4.2",
@@ -65,6 +66,7 @@
         "post-autoload-dump": [
             "@php think service:discover",
             "@php think vendor:publish"
-        ]
+        ],
+        "run-php-webserver": "php think run"
     }
 }
