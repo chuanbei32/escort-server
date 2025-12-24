@@ -4,7 +4,7 @@ declare (strict_types = 1);
 namespace app\api\service;
 
 use app\api\model\User as UserModel;
-use EasyWeChat\Factory;
+use EasyWeChat\MiniApp\Application;
 use thans\jwt\facade\JWTAuth;
 use think\facade\Config;
 
@@ -24,13 +24,15 @@ class Login
         ];
 
         // 2. 初始化小程序实例
-        $app = Factory::miniProgram($config);
+        $app = new Application($config);
 
         // 3. 通过 code 换取 openid
-        $auth = $app->auth->session($code);
+        $utils = $app->getUtils();
         
-        if (isset($auth['errcode']) && $auth['errcode'] !== 0) {
-            throw new \Exception('微信登录失败：' . ($auth['errmsg'] ?? '未知错误'));
+        try {
+            $auth = $utils->codeToSession($code);
+        } catch (\Exception $e) {
+            throw new \Exception('微信登录失败：' . $e->getMessage());
         }
 
         $openid = $auth['openid'];
