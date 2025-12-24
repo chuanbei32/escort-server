@@ -15,12 +15,10 @@ class Hospital
      */
     public function getHospitalList(int $page = 1, int $limit = 10): array
     {
-        $list = HospitalModel::where('status', 1)
-            ->order('sort', 'desc')
-            ->page($page, $limit)
+        $list = HospitalModel::page($page, $limit)
             ->select();
             
-        $total = HospitalModel::where('status', 1)->count();
+        $total = HospitalModel::count();
             
         return [
             'list'      => $list,

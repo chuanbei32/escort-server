@@ -15,9 +15,7 @@ class Package
      */
     public function getPackageList(int $page = 1, int $limit = 10): array
     {
-        $list = ServicePackage::where('status', 1)
-            ->order('sort', 'desc')
-            ->page($page, $limit)
+        $list = ServicePackage::page($page, $limit)
             ->select();
             
         $total = ServicePackage::where('status', 1)->count();

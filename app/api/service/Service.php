@@ -16,14 +16,11 @@ class Service
      */
     public function getServiceList(array $where = [], int $page = 1, int $limit = 10): array
     {
-        $list = ServiceModel::where('status', 1)
-            ->where($where)
-            ->order('sort', 'desc')
+        $list = ServiceModel::where($where)
             ->page($page, $limit)
             ->select();
             
-        $total = ServiceModel::where('status', 1)
-            ->where($where)
+        $total = ServiceModel::where($where)
             ->count();
             
         return [
