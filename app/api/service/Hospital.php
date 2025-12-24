@@ -36,7 +36,6 @@ class Hospital
     public function getHospitalDetail(int $id): ?HospitalModel
     {
         return HospitalModel::where('id', $id)
-            ->where('status', 1)
             ->find();
     }
 }
