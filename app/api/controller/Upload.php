@@ -15,6 +15,8 @@ class Upload extends Base
      */
     public function file()
     {
+        error_reporting(E_ALL & ~E_DEPRECATED);
+
         // 获取上传文件
         $file = $this->request->file('file');
         
