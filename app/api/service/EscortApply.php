@@ -25,20 +25,20 @@ class EscortApply
             'address'            => $data['address'] ?? '', // 将地址暂存到城市字段
             'message'         => $data['message'] ?? '',
             'agree_agreement' => $data['agree_protocol'] ?? 0,
-            'status'          => 'pending',
+            'status'          => 0,
         ];
         return EscortApplicationModel::create($saveData);
     }
 
-    /**
-     * 获取陪诊师协议
-     * @return string
-     */
-    public function getProtocol(): string
-    {
-        // 模拟协议内容
-        return "陪诊师服务协议内容...";
-    }
+    // /**
+    //  * 获取陪诊师协议
+    //  * @return string
+    //  */
+    // public function getProtocol(): string
+    // {
+    //     // 模拟协议内容
+    //     return "陪诊师服务协议内容...";
+    // }
 
     /**
      * 招聘陪诊师申请
@@ -61,7 +61,7 @@ class EscortApply
             'resume_file'      => $data['resume_url'] ?? '',
             'resume_file_name' => basename($data['resume_url'] ?? ''),
             'agree_agreement'  => $data['agree_protocol'] ?? 0,
-            'status'           => 'pending',
+            'status'           => 0,
             'resume_url'        => $data['resume_url'] ?? '',
             'certificate_url' => $data['certificate_url'] ?? '',
         ];

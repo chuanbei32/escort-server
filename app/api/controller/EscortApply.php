@@ -23,28 +23,27 @@ class EscortApply extends Base
     public function apply(): Response
     {
         $data = $this->request->only(['occupation', 'name', 'phone', 'wechat', 'address', 'message', 'agree_protocol']);
-        
-        if (empty($data['name']) || empty($data['phone'])) {
-            return $this->error('姓名和电话不能为空');
+        $data['user_id'] = $this->getUid();
+
+        try {
+            $this->validate($data, \app\api\validate\EscortApply::class . '.apply');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
         }
 
-        if (empty($data['agree_protocol'])) {
-            return $this->error('请先同意协议');
-        }
-
-        $res = $this->service->apply($this->getUid(), $data);
+        $res = $this->service->apply($data['user_id'], $data);
         return $this->success($res, '申请已提交');
     }
 
-    /**
-     * 获取协议
-     * @return Response
-     */
-    public function protocol(): Response
-    {
-        $content = $this->service->getProtocol();
-        return $this->success(['content' => $content]);
-    }
+    // /**
+    //  * 获取协议
+    //  * @return Response
+    //  */
+    // public function protocol(): Response
+    // {
+    //     $content = $this->service->getProtocol();
+    //     return $this->success(['content' => $content]);
+    // }
 
     /**
      * 招聘申请
@@ -65,16 +64,15 @@ class EscortApply extends Base
             'certificate_url', 
             'agree_protocol'
         ]);
+        $data['user_id'] = $this->getUid();
         
-        if (empty($data['name']) || empty($data['phone'])) {
-            return $this->error('姓名和电话不能为空');
+        try {
+            $this->validate($data, \app\api\validate\EscortApply::class . '.recruit');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
         }
 
-        if (empty($data['agree_protocol'])) {
-            return $this->error('请先同意协议');
-        }
-
-        $res = $this->service->recruitApply($this->getUid(), $data);
+        $res = $this->service->recruitApply($data['user_id'], $data);
         return $this->success($res, '招聘申请已提交');
     }
 }
