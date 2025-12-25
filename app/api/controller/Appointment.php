@@ -23,18 +23,20 @@ class Appointment extends Base
     public function create(): Response
     {
         $params = $this->request->only([
-            'hospital_id',
             'service_id',
-            'appointment_time',
+            'hospital_id',
+            'department',
+            'expected_time',
             'patient_name',
             'patient_gender',
-            'patient_age',
             'patient_phone',
-            'remark'
+            'address',
+            'escort_gender_preference',
+            'requirements'
         ]);
 
         // 验证必填项
-        if (empty($params['hospital_id']) || empty($params['service_id']) || empty($params['patient_name']) || empty($params['patient_phone'])) {
+        if (empty($params['hospital_id']) || empty($params['service_id']) || empty($params['patient_name']) || empty($params['patient_phone']) || empty($params['expected_time'])) {
             return $this->error('缺少必要参数');
         }
 

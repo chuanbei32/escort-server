@@ -33,25 +33,12 @@ class User extends Base
      */
     public function update(): Response
     {
-        // 假设当前用户ID为1
-        $userId = 1;
         $data = $this->request->only(['nickname', 'avatar', 'phone', 'gender']);
         
-        $res = $this->service->updateUserInfo($userId, $data);
+        $res = $this->service->updateUserInfo($this->getUid(), $data);
         if ($res) {
             return $this->success(null, '更新成功');
         }
         return $this->error('更新失败');
-    }
-
-    /**
-     * 获取编辑信息
-     * @return Response
-     */
-    public function editInfo(): Response
-    {
-        $userId = $this->getUid();
-        $info = $this->service->getUserInfo($userId);
-        return $this->success($info);
     }
 }

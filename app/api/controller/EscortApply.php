@@ -22,10 +22,14 @@ class EscortApply extends Base
      */
     public function apply(): Response
     {
-        $data = $this->request->only(['name', 'phone', 'id_card', 'city', 'experience', 'id_card_front', 'id_card_back']);
+        $data = $this->request->only(['occupation', 'name', 'phone', 'wechat', 'address', 'message', 'agree_protocol']);
         
         if (empty($data['name']) || empty($data['phone'])) {
             return $this->error('姓名和电话不能为空');
+        }
+
+        if (empty($data['agree_protocol'])) {
+            return $this->error('请先同意协议');
         }
 
         $res = $this->service->apply($this->getUid(), $data);
@@ -48,10 +52,26 @@ class EscortApply extends Base
      */
     public function recruitApply(): Response
     {
-        $data = $this->request->only(['name', 'phone', 'city', 'remark']);
+        $data = $this->request->only([
+            'name', 
+            'gender', 
+            'birth_date', 
+            'phone', 
+            'education', 
+            'region', 
+            'hospital', 
+            'specialty', 
+            'resume_url', 
+            'certificate_url', 
+            'agree_protocol'
+        ]);
         
         if (empty($data['name']) || empty($data['phone'])) {
             return $this->error('姓名和电话不能为空');
+        }
+
+        if (empty($data['agree_protocol'])) {
+            return $this->error('请先同意协议');
         }
 
         $res = $this->service->recruitApply($this->getUid(), $data);

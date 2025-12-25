@@ -34,7 +34,7 @@ Route::group('v1', function () {
     });
 
     // 协议
-    Route::get('escort/protocol', 'EscortApply/protocol');
+    // Route::get('escort/protocol', 'EscortApply/protocol');
 
     // --- 需授权接口 ---
     Route::group('', function () {
@@ -58,7 +58,6 @@ Route::group('v1', function () {
         Route::group('user', function () {
             Route::get('info', 'User/info');
             Route::post('update', 'User/update');
-            Route::get('edit-info', 'User/editInfo');
         });
 
         // 陪诊师申请
@@ -70,6 +69,11 @@ Route::group('v1', function () {
         // 优惠券模块
         Route::group('coupon', function () {
             Route::get('list', 'Coupon/list');
+        });
+
+        // 文件上传
+        Route::group('upload', function () {
+            Route::post('file', 'Upload/file');
         });
     })->middleware(\app\api\middleware\Auth::class);
 });
