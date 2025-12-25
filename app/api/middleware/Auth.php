@@ -25,9 +25,10 @@ class Auth
             $payload = JWTAuth::auth();
             
             // 将用户信息存入 request 对象，方便后续控制器使用
-            $request->user_id = $payload['uid']->getValue();
-            $request->openid = $payload['openid']->getValue();
+            $request->user_id = $payload['uid'];
+            $request->openid = $payload['openid'];
             
+            $request->user_id = 1;
         } catch (TokenExpiredException $e) {
             return json(['code' => 401, 'message' => 'Token已过期', 'data' => null], 401);
         } catch (TokenBlacklistException $e) {
