@@ -13,9 +13,10 @@ class Login
     /**
      * 微信登录
      * @param string $code
+     * @param int $pid 推荐人ID
      * @return array
      */
-    public function wechatLogin(string $code): array
+    public function wechatLogin(string $code, int $pid = 0): array
     {
         // 1. 获取微信配置 (实际应用中应从配置文件读取)
         $config = [
@@ -40,12 +41,19 @@ class Login
         // 4. 查找或创建用户
         $user = UserModel::where('openid', $openid)->find();
         if (!$user) {
-            $user = UserModel::create([
+            $userData = [
                 'openid' => $openid,
                 'status' => 1,
                 // 初始昵称和头像可以先设为空或默认值
                 'nickname' => '用户' . substr($openid, -6),
-            ]);
+            ];
+            
+            // 如果有推荐人ID，则绑定
+            if ($pid > 0) {
+                $userData['parent_id'] = $pid;
+            }
+            
+            $user = UserModel::create($userData);
         }
 
         // 5. 生成 JWT Token

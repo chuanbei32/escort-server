@@ -23,15 +23,16 @@ class Login extends Base
     public function wechat(): Response
     {
         $code = $this->request->post('code');
+        $pid  = $this->request->post('pid', 0);
         
         try {
-            $this->validate(['code' => $code], \app\api\validate\Login::class . '.wechat');
+            $this->validate(['code' => $code, 'pid' => $pid], \app\api\validate\Login::class . '.wechat');
         } catch (\think\exception\ValidateException $e) {
             return $this->error($e->getError());
         }
 
         try {
-            $data = $this->service->wechatLogin($code);
+            $data = $this->service->wechatLogin($code, (int)$pid);
             return $this->success($data, '登录成功');
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
