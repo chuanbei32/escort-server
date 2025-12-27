@@ -40,6 +40,7 @@ class Login
 
         // 4. 查找或创建用户
         $user = UserModel::where('openid', $openid)->find();
+
         if (!$user) {
             $userData = [
                 'openid' => $openid,
@@ -54,6 +55,15 @@ class Login
             }
             
             $user = UserModel::create($userData);
+
+            if ($pid > 0) {
+                // 发放新人优惠券
+                \app\api\model\UserCoupon::create([
+                    'user_id'   => $pid,
+                    'coupon_id' => 1,
+                    'status'    => 0,
+                ]);
+            }
         }
 
         // 5. 生成 JWT Token
