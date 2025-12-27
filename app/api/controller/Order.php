@@ -25,14 +25,19 @@ class Order extends Base
         $userId = $this->getUid();
         $page = $this->request->get('page/d', 1);
         $limit = $this->request->get('page_size/d', 10);
+        $status = $this->request->get('status/d', -1); // -1:全部 0:待支付 1:已支付 2:已退款 3:已完成
         
         try {
-            $this->validate(['page' => $page, 'page_size' => $limit], \app\api\validate\Common::class . '.paging');
+            $this->validate([
+                'page'      => $page,
+                'page_size' => $limit,
+                'status'    => $status
+            ], \app\api\validate\Order::class . '.list');
         } catch (\think\exception\ValidateException $e) {
             return $this->error($e->getError());
         }
 
-        $data = $this->service->getOrderList($userId, $page, $limit);
+        $data = $this->service->getOrderList($userId, $page, $limit, $status);
         return $this->success($data);
     }
 

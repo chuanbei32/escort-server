@@ -12,16 +12,23 @@ class Order
      * @param int $userId
      * @param int $page
      * @param int $limit
+     * @param int $status -1:全部 0:待支付 1:已支付 2:已退款 3:已完成
      * @return array
      */
-    public function getOrderList(int $userId, int $page = 1, int $limit = 10): array
+    public function getOrderList(int $userId, int $page = 1, int $limit = 10, int $status = -1): array
     {
-        $list = OrderModel::where('user_id', $userId)
+        $where = [['user_id', '=', $userId]];
+
+        if ($status !== -1) {
+            $where[] = ['status', '=', $status];
+        }
+
+        $list = OrderModel::where($where)
             ->order('create_time', 'desc')
             ->page($page, $limit)
             ->select();
             
-        $total = OrderModel::where('user_id', $userId)->count();
+        $total = OrderModel::where($where)->count();
             
         return [
             'list'      => $list,
@@ -39,8 +46,11 @@ class Order
      */
     public function getOrderDetail(int $id, int $userId): ?OrderModel
     {
-        return OrderModel::where('id', $id)
+        $info = OrderModel::with(['appointments.serviceInfo'])
+            ->where('id', $id)
             ->where('user_id', $userId)
             ->find();
+
+        return $info;
     }
 }

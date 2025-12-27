@@ -23,6 +23,7 @@ class Appointment extends Base
     public function create(): Response
     {
         $params = $this->request->only([
+            'type',
             'service_id',
             'hospital_id',
             'department',
@@ -32,7 +33,8 @@ class Appointment extends Base
             'patient_phone',
             'address',
             'escort_gender_preference',
-            'requirements'
+            'requirements',
+            'coupon_id'
         ]);
 
         try {

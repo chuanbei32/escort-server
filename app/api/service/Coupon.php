@@ -40,7 +40,7 @@ class Coupon
                 'id'         => $item->id,
                 'coupon_id'  => $item->coupon_id,
                 'title'      => $coupon->name,
-                'money'      => $coupon->amount,
+                'money'      => (int) $coupon->amount,
                 'condition'  => $coupon->min_amount > 0 ? "满{$coupon->min_amount}可用" : "无门槛",
                 'desc'       => "有效期至 " . substr($coupon->end_time, 0, 10),
                 'validDate'  => substr($coupon->end_time, 0, 10),

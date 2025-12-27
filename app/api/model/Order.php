@@ -12,4 +12,13 @@ class Order extends Model
     protected $autoWriteTimestamp = 'datetime';
     protected $createTime = 'create_time';
     protected $updateTime = 'update_time';
+
+    /**
+     * 关联预约
+     * @return \think\model\relation\HasMany
+     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'order_id', 'id');
+    }
 }

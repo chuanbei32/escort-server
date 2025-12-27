@@ -8,14 +8,18 @@ use think\Validate;
 class Appointment extends Validate
 {
     protected $rule = [
+        'type'          => 'require|in:1,2',
         'service_id'    => 'require|number',
         'hospital_id'   => 'require|number',
         'expected_time' => 'require',
         'patient_name'  => 'require|max:20',
         'patient_phone' => 'require|mobile',
+        'coupon_id'     => 'number',
     ];
 
     protected $message = [
+        'type.require'          => '请选择预约类型',
+        'type.in'               => '预约类型不正确',
         'service_id.require'    => '请选择服务',
         'hospital_id.require'   => '请选择医院',
         'expected_time.require' => '请选择预约时间',
@@ -25,6 +29,6 @@ class Appointment extends Validate
     ];
 
     protected $scene = [
-        'create' => ['service_id', 'hospital_id', 'expected_time', 'patient_name', 'patient_phone'],
+        'create' => ['type', 'service_id', 'hospital_id', 'expected_time', 'patient_name', 'patient_phone', 'coupon_id'],
     ];
 }
