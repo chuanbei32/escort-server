@@ -23,15 +23,26 @@ class Coupon extends Base
     public function list(): Response
     {
         $userId = $this->getUid();
-        $status = $this->request->get('status/d', 1);
+        // $status = $this->request->get('status/d', 0);
+        $page = $this->request->get('page/d', 1);
+        $pageSize = $this->request->get('page_size/d', 10);
         
         try {
-            $this->validate(['status' => $status], \app\api\validate\Common::class . '.status');
+            // $this->validate([
+            //     'status'    => $status,
+            //     'page'      => $page,
+            //     'page_size' => $pageSize
+            // ], \app\api\validate\Common::class . '.status');
+            $this->validate([
+                'page'      => $page,
+                'page_size' => $pageSize
+            ], \app\api\validate\Common::class . '.paging');
         } catch (\think\exception\ValidateException $e) {
             return $this->error($e->getError());
         }
 
-        $data = $this->service->getCouponList($userId, $status);
+        // $data = $this->service->getCouponList($userId, $status, $page, $pageSize);
+        $data = $this->service->getCouponList($userId, $page, $pageSize);
         return $this->success($data);
     }
 }

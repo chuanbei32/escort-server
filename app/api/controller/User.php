@@ -43,7 +43,7 @@ class User extends Base
 
         $res = $this->service->updateUserInfo($this->getUid(), $data);
         if ($res) {
-            return $this->success(null, '更新成功');
+            return $this->success(message: '更新成功');
         }
         return $this->error('更新失败');
     }

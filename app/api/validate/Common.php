@@ -25,6 +25,8 @@ class Common extends Validate
         'limit.between'    => '限制数量需在1-100之间',
         'id.require'       => 'ID不能为空',
         'id.number'        => 'ID格式不正确',
+        'type.number'      => '类型格式不正确',
+        'status.number'    => '状态格式不正确',
     ];
 
     protected $scene = [
