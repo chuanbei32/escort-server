@@ -47,13 +47,13 @@ class EscortApply extends Validate
      */
     protected function checkApplyStatus($value, $rule, $data = [])
     {
-        $application = EscortApplication::where('user_id', $value)->find();
-        if ($application) {
-            if ($application->status == 0) {
-                return '等待审核';
-            }
-            return '您已经提交过申请了，请勿重复提交';
-        }
+        // $application = EscortApplication::where('user_id', $value)->find();
+        // if ($application) {
+        //     if ($application->status == 0) {
+        //         return '等待审核';
+        //     }
+        //     return '您已经提交过申请了，请勿重复提交';
+        // }
         return true;
     }
 
@@ -65,13 +65,13 @@ class EscortApply extends Validate
         // 这里的逻辑根据实际业务需求，如果招聘申请也需要类似限制
         // 注意：数据库脚本中 ea8_recruit_application 暂时没有 user_id 字段，
         // 但 Service 中有使用，这里先按照有 user_id 的逻辑编写，以保持一致。
-        $application = RecruitApplication::where('user_id', $value)->find();
-        if ($application) {
-            if ($application->status == 0) {
-                return '等待审核';
-            }
-            return '您已经提交过申请了，请勿重复提交';
-        }
+        // $application = RecruitApplication::where('user_id', $value)->find();
+        // if ($application) {
+        //     if ($application->status == 0) {
+        //         return '等待审核';
+        //     }
+        //     return '您已经提交过申请了，请勿重复提交';
+        // }
         return true;
     }
 }

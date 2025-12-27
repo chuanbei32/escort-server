@@ -25,6 +25,12 @@ class Coupon extends Base
         $userId = $this->getUid();
         $status = $this->request->get('status/d', 1);
         
+        try {
+            $this->validate(['status' => $status], \app\api\validate\Common::class . '.status');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $data = $this->service->getCouponList($userId, $status);
         return $this->success($data);
     }

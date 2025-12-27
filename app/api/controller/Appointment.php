@@ -35,9 +35,10 @@ class Appointment extends Base
             'requirements'
         ]);
 
-        // 验证必填项
-        if (empty($params['hospital_id']) || empty($params['service_id']) || empty($params['patient_name']) || empty($params['patient_phone']) || empty($params['expected_time'])) {
-            return $this->error('缺少必要参数');
+        try {
+            $this->validate($params, \app\api\validate\Appointment::class . '.create');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
         }
 
         $res = $this->service->create($this->getUid(), $params);

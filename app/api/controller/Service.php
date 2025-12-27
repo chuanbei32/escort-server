@@ -26,6 +26,20 @@ class Service extends Base
         $page = $this->request->get('page/d', 1);
         $limit = $this->request->get('page_size/d', 10);
         
+        try {
+            $this->validate([
+                'page'      => $page,
+                'page_size' => $limit,
+                'id'        => $hospitalId
+            ], \app\api\validate\Common::class . '.paging');
+            
+            if ($hospitalId) {
+                $this->validate(['id' => $hospitalId], \app\api\validate\Common::class . '.id');
+            }
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $where = [];
         if ($hospitalId) {
             $where[] = ['hospital_id', '=', $hospitalId];
@@ -42,6 +56,12 @@ class Service extends Base
      */
     public function detail(int $id): Response
     {
+        try {
+            $this->validate(['id' => $id], \app\api\validate\Common::class . '.id');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $info = $this->service->getServiceDetail($id);
         if (!$info) {
             return $this->error('服务不存在');

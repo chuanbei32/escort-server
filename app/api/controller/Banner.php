@@ -23,6 +23,13 @@ class Banner extends Base
     public function list(): Response
     {
         $type = $this->request->get('type/d', 1);
+        
+        try {
+            $this->validate(['type' => $type], \app\api\validate\Common::class . '.type');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $data = $this->service->getBannerList($type);
         return $this->success($data);
     }

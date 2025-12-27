@@ -26,6 +26,12 @@ class Order extends Base
         $page = $this->request->get('page/d', 1);
         $limit = $this->request->get('page_size/d', 10);
         
+        try {
+            $this->validate(['page' => $page, 'page_size' => $limit], \app\api\validate\Common::class . '.paging');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $data = $this->service->getOrderList($userId, $page, $limit);
         return $this->success($data);
     }
@@ -37,6 +43,12 @@ class Order extends Base
      */
     public function detail(int $id): Response
     {
+        try {
+            $this->validate(['id' => $id], \app\api\validate\Common::class . '.id');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $userId = $this->getUid();
         $info = $this->service->getOrderDetail($id, $userId);
         if (!$info) {

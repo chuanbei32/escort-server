@@ -24,8 +24,10 @@ class Login extends Base
     {
         $code = $this->request->post('code');
         
-        if (empty($code)) {
-            return $this->error('code不能为空');
+        try {
+            $this->validate(['code' => $code], \app\api\validate\Login::class . '.wechat');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
         }
 
         try {

@@ -23,7 +23,7 @@ class Home extends Base
     public function index(): Response
     {
         $data = $this->service->getHomeData();
-        return json(['code' => 1, 'msg' => 'success', 'data' => $data]);
+        return $this->success($data);
     }
 
     /**
@@ -40,6 +40,6 @@ class Home extends Base
             ->page($page, $limit)
             ->select();
             
-        return json(['code' => 1, 'msg' => 'success', 'data' => $hospitals]);
+        return $this->success($hospitals);
     }
 }

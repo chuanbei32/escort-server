@@ -35,6 +35,12 @@ class User extends Base
     {
         $data = $this->request->only(['nickname', 'avatar', 'phone', 'gender']);
         
+        try {
+            $this->validate($data, \app\api\validate\User::class . '.update');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $res = $this->service->updateUserInfo($this->getUid(), $data);
         if ($res) {
             return $this->success(null, '更新成功');

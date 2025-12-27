@@ -25,6 +25,12 @@ class Package extends Base
         $page = $this->request->get('page/d', 1);
         $limit = $this->request->get('page_size/d', 10);
         
+        try {
+            $this->validate(['page' => $page, 'page_size' => $limit], \app\api\validate\Common::class . '.paging');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
         $data = $this->service->getPackageList($page, $limit);
         return $this->success($data);
     }

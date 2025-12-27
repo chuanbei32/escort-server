@@ -23,8 +23,11 @@ class Payment extends Base
     public function wxpay(): Response
     {
         $orderId = $this->request->post('order_id/d');
-        if (!$orderId) {
-            return $this->error('订单ID不能为空');
+        
+        try {
+            $this->validate(['order_id' => $orderId], \app\api\validate\Payment::class . '.wxpay');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
         }
 
         $data = $this->service->wxpay($this->getUid(), ['order_id' => $orderId]);
