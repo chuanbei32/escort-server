@@ -30,16 +30,6 @@ class EscortApply
         return EscortApplicationModel::create($saveData);
     }
 
-    // /**
-    //  * 获取陪诊师协议
-    //  * @return string
-    //  */
-    // public function getProtocol(): string
-    // {
-    //     // 模拟协议内容
-    //     return "陪诊师服务协议内容...";
-    // }
-
     /**
      * 招聘陪诊师申请
      * @param int   $userId

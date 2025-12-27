@@ -30,11 +30,13 @@ Route::group('v1', function () {
     // 服务模块
     Route::group('service', function () {
         Route::get('list', 'Service/list');
-        Route::get('detail/:id', 'Service/detail');
+        Route::get('detail/:id/:type', 'Service/detail');
     });
 
-    // 协议
-    // Route::get('escort/protocol', 'EscortApply/protocol');
+    // 支付回调
+    Route::group('payment', function () {
+        Route::any('notify', 'Payment/notify');
+    });
 
     // --- 需授权接口 ---
     Route::group('', function () {

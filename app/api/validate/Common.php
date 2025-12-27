@@ -12,7 +12,7 @@ class Common extends Validate
         'page_size' => 'number|between:1,100',
         'limit'     => 'number|between:1,100',
         'id'        => 'require|number',
-        'type'      => 'number',
+        'type'      => 'require|number|in:1,2',
         'status'    => 'number',
     ];
 
@@ -25,7 +25,9 @@ class Common extends Validate
         'limit.between'    => '限制数量需在1-100之间',
         'id.require'       => 'ID不能为空',
         'id.number'        => 'ID格式不正确',
+        'type.require'     => '类型不能为空',
         'type.number'      => '类型格式不正确',
+        'type.in'          => '类型不正确',
         'status.number'    => '状态格式不正确',
     ];
 
@@ -34,6 +36,7 @@ class Common extends Validate
         'limit'  => ['page', 'limit'],
         'id'     => ['id'],
         'type'   => ['type'],
+        'id_type' => ['id', 'type'],
         'status' => ['status'],
     ];
 }

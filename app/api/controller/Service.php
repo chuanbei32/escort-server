@@ -52,19 +52,20 @@ class Service extends Base
     /**
      * 服务详情
      * @param int $id
+     * @param int $type
      * @return Response
      */
-    public function detail(int $id): Response
+    public function detail(int $id, int $type): Response
     {
         try {
-            $this->validate(['id' => $id], \app\api\validate\Common::class . '.id');
+            $this->validate(['id' => $id, 'type' => $type], \app\api\validate\Common::class . '.id_type');
         } catch (\think\exception\ValidateException $e) {
             return $this->error($e->getError());
         }
 
-        $info = $this->service->getServiceDetail($id);
+        $info = $this->service->getServiceDetail($id, $type);
         if (!$info) {
-            return $this->error('服务不存在');
+            return $this->error($type == 2 ? '套餐不存在' : '服务不存在');
         }
         return $this->success($info);
     }

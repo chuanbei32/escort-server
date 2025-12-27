@@ -30,7 +30,20 @@ class Payment extends Base
             return $this->error($e->getError());
         }
 
-        $data = $this->service->wxpay($this->getUid(), ['order_id' => $orderId]);
-        return $this->success($data);
+        try {
+            $data = $this->service->wxpay($this->getUid(), ['order_id' => $orderId]);
+            return $this->success($data);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
+
+    /**
+     * 微信支付回调
+     * @return mixed
+     */
+    public function notify()
+    {
+        return $this->service->notify();
     }
 }

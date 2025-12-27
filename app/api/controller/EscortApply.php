@@ -35,16 +35,6 @@ class EscortApply extends Base
         return $this->success($res, '申请已提交');
     }
 
-    // /**
-    //  * 获取协议
-    //  * @return Response
-    //  */
-    // public function protocol(): Response
-    // {
-    //     $content = $this->service->getProtocol();
-    //     return $this->success(['content' => $content]);
-    // }
-
     /**
      * 招聘申请
      * @return Response
