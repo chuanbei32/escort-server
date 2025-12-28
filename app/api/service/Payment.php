@@ -8,6 +8,7 @@ use app\api\model\User as UserModel;
 use EasyWeChat\Pay\Application;
 use think\facade\Config;
 use think\facade\Log;
+use think\facade\Request;
 
 class Payment
 {
@@ -23,7 +24,7 @@ class Payment
         $orderId = $data['order_id'];
         
         // 1. 获取订单详情
-        $order = OrderModel::where('id', $orderId)
+        $order = OrderModel::with(['appointments.serviceInfo'])->where('id', $orderId)
             ->where('user_id', $userId)
             ->find();
             
@@ -47,20 +48,17 @@ class Payment
         $app = new Application($config);
         
         // 4. 下单
-        $response = $app->getClient()->post('v3/pay/transactions/jsapi', [
-            'json' => [
-                'mchid'        => (string)$config['mch_id'],
-                'out_trade_no' => (string)$order->order_id,
-                'appid'        => (string)$miniProgramConfig['app_id'],
-                'description'  => '陪诊服务-' . $order->service_name,
-                'notify_url'   => $config['notify_url'],
-                'amount'       => [
-                    'total'    => (int)($order->payment_amount * 100), // 转为分
-                    'currency' => 'CNY',
-                ],
-                'payer'        => [
-                    'openid' => $user->openid,
-                ],
+        $response = $app->getClient()->post('pay/unifiedorder', [
+            'xml' => [
+                'appid'            => (string)$miniProgramConfig['app_id'],
+                'mch_id'           => (string)$config['mch_id'],
+                'out_trade_no'     => (string)$order->order_sn,
+                'body'             => '陪诊服务',
+                'notify_url'       => $config['notify_url'],
+                'total_fee'        => (int)($order->total_fee * 100), // 转为分
+                'trade_type'       => 'JSAPI',
+                'openid'           => $user->openid,
+                'spbill_create_ip' => Request::ip(),
             ],
         ]);
         
@@ -73,7 +71,7 @@ class Payment
         
         // 5. 生成支付参数
         $utils = $app->getUtils();
-        $params = $utils->buildBridgeConfig($result['prepay_id'], $miniProgramConfig['app_id']);
+        $params = $utils->buildBridgeConfig($result['prepay_id'], $miniProgramConfig['app_id'], 'MD5');
         
         return $params;
     }
@@ -88,23 +86,23 @@ class Payment
         $app = new Application($config);
         $server = $app->getServer();
 
-        $server->handlePaid(function ($message) {
+        $server->with(function ($message, $next) {
             Log::info('微信支付回调：' . json_encode($message, JSON_UNESCAPED_UNICODE));
 
-            if ($message['trade_state'] === 'SUCCESS') {
+            if ($message['return_code'] === 'SUCCESS' && $message['result_code'] === 'SUCCESS') {
                 $orderId = $message['out_trade_no'];
-                $order = OrderModel::where('order_id', $orderId)->find();
+                $order = OrderModel::where('order_sn', $orderId)->find();
                 
                 if ($order && $order->status == 0) {
                     $order->status = 1; // 已支付
-                    $order->purchase_time = date('Y-m-d H:i:s');
+                    $order->pay_time = date('Y-m-d H:i:s');
                     $order->save();
                     
                     Log::info('订单支付成功：' . $orderId);
                 }
             }
             
-            return true;
+            return $next($message);
         });
 
         return $server->serve();
