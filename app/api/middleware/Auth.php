@@ -28,7 +28,7 @@ class Auth
             $request->user_id = $payload['uid'];
             $request->openid = $payload['openid'];
             
-            $request->user_id = 1;
+            // $request->user_id = 1;
         } catch (TokenExpiredException $e) {
             return json(['code' => 401, 'message' => 'Token已过期', 'data' => null], 401);
         } catch (TokenBlacklistException $e) {
