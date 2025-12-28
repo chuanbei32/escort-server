@@ -67,17 +67,19 @@ class Appointment
                 'order_sn'       => date('YmdHis') . str_pad((string)mt_rand(1, 99999), 5, '0', STR_PAD_LEFT),
                 'user_id'        => $userId,
                 'total_fee'      => $totalFee,
-                'coupon_id'      => $couponId > 0 ? $couponId : null,
+                'coupon_id'      => $couponId > 0 ? $couponId : 0,
                 'status'         => 0, // 待支付
                 'used_count'     => 1,
                 'expire_time'    => date('Y-m-d H:i:s', strtotime('+180 days')),
             ];
 
             if ($type == 2) {
-                $orderData['package_id'] = $serviceId;
+                $orderData['type'] = 2;
+                $orderData['service_id'] = $serviceId;
                 $orderData['total_count'] = $service->total_count;
             } else {
-                $orderData['package_id'] = null;
+                $orderData['type'] = 1;
+                $orderData['service_id'] = $serviceId;
                 $orderData['total_count'] = 1;
             }
 
@@ -85,6 +87,52 @@ class Appointment
 
             // 5. 回填预约表中的订单 ID
             $appointment->save(['order_id' => $order->id]);
+
+            return $appointment;
+        });
+    }
+
+    /**
+     * 再次预约 (针对已购套餐)
+     * @param int   $userId
+     * @param array $data
+     * @return AppointmentModel
+     */
+    public function reAppointment(int $userId, array $data): AppointmentModel
+    {
+        return Db::transaction(function () use ($userId, $data) {
+            $orderId = $data['order_id'];
+
+            // 1. 获取订单并验证
+            $order = OrderModel::where([
+                ['id', '=', $orderId],
+                ['user_id', '=', $userId]
+            ])->find();
+
+            if (!$order) {
+                throw new \Exception('订单不存在');
+            }
+
+            if ($order->status == 0) {
+                throw new \Exception('订单尚未支付');
+            }
+
+            if ($order->used_count >= $order->total_count) {
+                throw new \Exception('预约次数已用完');
+            }
+
+            // 2. 创建预约信息
+            $data['user_id'] = $userId;
+            $data['status'] = 0; // 待确认
+            
+            // 补充订单中的服务信息
+            $data['type'] = $order->type;
+            $data['service_id'] = $order->service_id;
+
+            $appointment = AppointmentModel::create($data);
+
+            // 3. 更新订单使用次数
+            $order->inc('used_count')->save();
 
             return $appointment;
         });

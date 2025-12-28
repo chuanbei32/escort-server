@@ -46,4 +46,37 @@ class Appointment extends Base
         $res = $this->service->create($this->getUid(), $params);
         return $this->success($res);
     }
+
+    /**
+     * 再次预约
+     * @return Response
+     */
+    public function reAppointment(): Response
+    {
+        $params = $this->request->only([
+            'order_id',
+            'hospital_id',
+            'department',
+            'expected_time',
+            'patient_name',
+            'patient_gender',
+            'patient_phone',
+            'address',
+            'escort_gender_preference',
+            'requirements'
+        ]);
+
+        try {
+            $this->validate($params, \app\api\validate\Appointment::class . '.reAppointment');
+        } catch (\think\exception\ValidateException $e) {
+            return $this->error($e->getError());
+        }
+
+        try {
+            $res = $this->service->reAppointment($this->getUid(), $params);
+            return $this->success($res);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
 }

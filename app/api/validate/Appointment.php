@@ -10,6 +10,7 @@ class Appointment extends Validate
     protected $rule = [
         'type'          => 'require|in:1,2',
         'service_id'    => 'require|number',
+        'order_id'      => 'require|number',
         'hospital_id'   => 'require|number',
         'expected_time' => 'require',
         'patient_name'  => 'require|max:20',
@@ -21,6 +22,7 @@ class Appointment extends Validate
         'type.require'          => '请选择预约类型',
         'type.in'               => '预约类型不正确',
         'service_id.require'    => '请选择服务',
+        'order_id.require'      => '订单ID不能为空',
         'hospital_id.require'   => '请选择医院',
         'expected_time.require' => '请选择预约时间',
         'patient_name.require'  => '请输入就诊人姓名',
@@ -30,5 +32,6 @@ class Appointment extends Validate
 
     protected $scene = [
         'create' => ['type', 'service_id', 'hospital_id', 'expected_time', 'patient_name', 'patient_phone', 'coupon_id'],
+        'reAppointment' => ['order_id', 'hospital_id', 'expected_time', 'patient_name', 'patient_phone'],
     ];
 }

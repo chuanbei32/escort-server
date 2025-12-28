@@ -43,6 +43,7 @@ Route::group('v1', function () {
         // 预约模块
         Route::group('appointment', function () {
             Route::post('create', 'Appointment/create');
+            Route::post('re-appointment', 'Appointment/reAppointment');
         });
 
         // 支付模块
