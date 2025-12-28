@@ -70,7 +70,7 @@ class Appointment
                 'coupon_id'      => $couponId > 0 ? $couponId : null,
                 'status'         => 0, // 待支付
                 'used_count'     => 1,
-                'expected_time'  => isset($service->valid_day) ? $service->valid_day : 0,
+                'expire_time'    => date('Y-m-d H:i:s', strtotime('+180 days')),
             ];
 
             if ($type == 2) {
