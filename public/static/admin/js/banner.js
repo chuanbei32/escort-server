@@ -66,7 +66,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
-                    {field: 'image_url', title: '图片URL', templet: ea.table.image},
+                    {field: 'image_url', title: '图片', templet: ea.table.image},
                     {field: 'create_time', title: '创建时间'},
                     {field: 'update_time', title: '更新时间'},
                     {

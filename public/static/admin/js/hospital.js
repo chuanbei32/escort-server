@@ -72,7 +72,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'name', title: '医院名称'},
                     {field: 'level', title: '医院等级'},
                     {field: 'type', title: '医院类型'},
-                    {field: 'image_url', title: '医院图片URL', templet: ea.table.image},
+                    {field: 'image_url', title: '医院图片', templet: ea.table.image},
                     {field: 'address', title: '医院地址'},
                     {field: 'create_time', title: '创建时间'},
                     {field: 'update_time', title: '更新时间'},
