@@ -19,6 +19,6 @@ class Order extends Model
      */
     public function appointments()
     {
-        return $this->hasMany(Appointment::class, 'order_id', 'id');
+        return $this->hasMany(Appointment::class, 'order_id', 'id')->with(['serviceInfo', 'hospital', 'escortApplication']);
     }
 }

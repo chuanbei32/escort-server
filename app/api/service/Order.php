@@ -46,10 +46,16 @@ class Order
      */
     public function getOrderDetail(int $id, int $userId): ?OrderModel
     {
-        $info = OrderModel::with(['appointments.serviceInfo'])
+        $info = OrderModel::with(['appointments'])
             ->where('id', $id)
             ->where('user_id', $userId)
             ->find();
+            
+        $info->appointments->each(function ($item) {
+            $item->serviceInfo = is_object($item->serviceInfo) ? $item->serviceInfo : [];
+            $item->hospital = is_object($item->hospital) ? $item->hospital : [];
+            $item->escortApplication = is_object($item->escortApplication) ? $item->escortApplication : [];
+        });
 
         return $info;
     }

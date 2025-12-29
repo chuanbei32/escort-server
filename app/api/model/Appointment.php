@@ -24,4 +24,22 @@ class Appointment extends Model
             2 => ServicePackage::class
         ]);
     }
+
+    /**
+     * 关联医院
+     * @return \think\model\relation\BelongsTo
+     */
+    public function hospital()
+    {
+        return $this->belongsTo(Hospital::class, 'hospital_id', 'id');
+    }
+
+    /**
+     * 关联陪诊师
+     * @return \think\model\relation\BelongsTo
+     */
+    public function escortApplication()
+    {
+        return $this->belongsTo(EscortApplication::class, 'escort_id', 'id');
+    }
 }
