@@ -25,7 +25,7 @@ class EscortApply
             'address'            => $data['address'] ?? '', // 将地址暂存到城市字段
             'message'         => $data['message'] ?? '',
             'agree_agreement' => $data['agree_protocol'] ?? 0,
-            'status'          => 0,
+            'status'          => 1,
         ];
         return EscortApplicationModel::create($saveData);
     }
@@ -51,7 +51,7 @@ class EscortApply
             'resume_file'      => $data['resume_url'] ?? '',
             'resume_file_name' => basename($data['resume_url'] ?? ''),
             'agree_agreement'  => $data['agree_protocol'] ?? 0,
-            'status'           => 0,
+            'status'           => 1,
             'resume_url'        => $data['resume_url'] ?? '',
             'certificate_url' => $data['certificate_url'] ?? '',
         ];
