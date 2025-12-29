@@ -50,7 +50,9 @@ class Order
             ->where('id', $id)
             ->where('user_id', $userId)
             ->find();
-            
+        if (empty($info)) {
+            return [];
+        }
         $info->appointments->each(function ($item) {
             $item->serviceInfo = is_object($item->serviceInfo) ? $item->serviceInfo : [];
             $item->hospital = is_object($item->hospital) ? $item->hospital : [];
