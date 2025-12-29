@@ -14,10 +14,18 @@ class Banner
      */
     public function getBannerList(int $type = 1): array
     {
-        return BannerModel::where('status', 1)
-            ->where('type', $type)
-            ->order('sort', 'desc')
+        $list = BannerModel::order('sort', 'desc')
             ->select()
             ->toArray();
+        foreach ($list as &$item) {
+            if (isset($item['image_url']) && !empty($item['image_url'])) {
+                if (str_starts_with($item['image_url'], '/')) {
+                    $item['image_url'] = request()->domain() . $item['image_url'];
+                } elseif (!str_starts_with($item['image_url'], 'http')) {
+                    $item['image_url'] = request()->domain() . '/' . $item['image_url'];
+                }
+            }
+        }
+        return $list;
     }
 }
