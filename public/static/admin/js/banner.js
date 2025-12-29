@@ -17,8 +17,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
         index: function () {
             ea.table.render({
                 init: init,
+                search: false,
                 cols: [[
-                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'image_url', title: '图片URL', templet: ea.table.image},                    {field: 'create_time', title: '创建时间'},                    {field: 'update_time', title: '更新时间'},                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {type: 'checkbox'},
+                    {field: 'id', title: 'id'},
+                    {field: 'image_url', title: '图片', templet: ea.table.image},
+                    {field: 'create_time', title: '创建时间'},
+                    {field: 'update_time', title: '更新时间'},
+                    {width: 250, title: '操作', templet: ea.table.tool},
                 ]],
             });
 
@@ -58,7 +64,11 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     }], 'export',
                 ],
                 cols: [[
-                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'image_url', title: '图片URL', templet: ea.table.image},                    {field: 'create_time', title: '创建时间'},                    {field: 'update_time', title: '更新时间'},
+                    {type: 'checkbox'},
+                    {field: 'id', title: 'id'},
+                    {field: 'image_url', title: '图片URL', templet: ea.table.image},
+                    {field: 'create_time', title: '创建时间'},
+                    {field: 'update_time', title: '更新时间'},
                     {
                         width: 250,
                         title: '操作',

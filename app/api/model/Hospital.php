@@ -12,4 +12,40 @@ class Hospital extends Model
     protected $autoWriteTimestamp = 'datetime';
     protected $createTime = 'create_time';
     protected $updateTime = 'update_time';
+
+    /**
+     * image_url 获取器
+     * @param $value
+     * @return string
+     */
+    public function getImageUrlAttr($value)
+    {
+        if (empty($value)) return $value;
+        if (str_starts_with($value, '/')) {
+            return request()->domain() . $value;
+        } elseif (!str_starts_with($value, 'http')) {
+            return request()->domain() . '/' . $value;
+        }
+        return $value;
+    }
+
+    /**
+     * content 获取器
+     * @param $value
+     * @return array
+     */
+    public function getContentAttr($value)
+    {
+        if (empty($value)) return [];
+        $images = explode('|', $value);
+        $domain = request()->domain();
+        foreach ($images as &$image) {
+            if (str_starts_with($image, '/')) {
+                $image = $domain . $image;
+            } elseif (!str_starts_with($image, 'http')) {
+                $image = $domain . '/' . $image;
+            }
+        }
+        return $images;
+    }
 }

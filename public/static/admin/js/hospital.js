@@ -18,7 +18,16 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.table.render({
                 init: init,
                 cols: [[
-                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'name', title: '医院名称'},                    {field: 'image_url', title: '医院图片URL', templet: ea.table.image},                    {field: 'address', title: '医院地址'},                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {type: 'checkbox'},
+                    {field: 'id', title: 'id', search: false},
+                    {field: 'name', title: '医院名称'},
+                    {field: 'level', title: '医院等级'},
+                    {field: 'type', title: '医院类型'},
+                    {field: 'image_url', title: '医院图片', search: false, templet: ea.table.image},
+                    {field: 'address', title: '医院地址', search: false},
+                    {field: 'create_time', title: '创建时间', search: false},
+                    {field: 'update_time', title: '更新时间', search: false},
+                    {width: 250, title: '操作', templet: ea.table.tool},
                 ]],
             });
 
@@ -58,7 +67,15 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     }], 'export',
                 ],
                 cols: [[
-                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'name', title: '医院名称'},                    {field: 'image_url', title: '医院图片URL', templet: ea.table.image},                    {field: 'address', title: '医院地址'},
+                    {type: 'checkbox'},
+                    {field: 'id', title: 'id'},
+                    {field: 'name', title: '医院名称'},
+                    {field: 'level', title: '医院等级'},
+                    {field: 'type', title: '医院类型'},
+                    {field: 'image_url', title: '医院图片URL', templet: ea.table.image},
+                    {field: 'address', title: '医院地址'},
+                    {field: 'create_time', title: '创建时间'},
+                    {field: 'update_time', title: '更新时间'},
                     {
                         width: 250,
                         title: '操作',
