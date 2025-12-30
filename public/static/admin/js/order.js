@@ -3,58 +3,22 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'user/index',
-        // add_url: 'user/add',
-        edit_url: 'user/edit',
-        delete_url: 'user/delete',
-        export_url: 'user/export',
-        modify_url: 'user/modify',
-        recycle_url: 'user/recycle',
+        index_url: 'order/index',
+        add_url: 'order/add',
+        edit_url: 'order/edit',
+        delete_url: 'order/delete',
+        export_url: 'order/export',
+        modify_url: 'order/modify',
+        recycle_url: 'order/recycle',
     };
 
     return {
 
         index: function () {
-            let urlParams = new URLSearchParams(window.location.search);
-            let level = urlParams.get('level') || 0;
-            let id = urlParams.get('id') || 0;
-
             ea.table.render({
                 init: init,
-                url: ea.url(`${init.index_url}?level=${level}&id=${id}`),
-                toolbar: ['refresh', 'delete', 'export'],
                 cols: [[
-                    {type: 'checkbox'},
-                    {field: 'id', title: 'id', search: false},
-                    {field: 'nickname', title: '用户昵称'},
-                    {field: 'avatar', title: '用户头像', search: false, templet: ea.table.image},
-                    // {field: 'phone', title: '手机号码'},
-                    {field: 'total', title: '消费总金额', search: false},
-                    {field: 'level1', title: '一级分销数量', search: false},
-                    {field: 'level2', title: '二级分销数量', search: false},
-                    {field: 'create_time', title: '创建时间', search: false},
-                    {field: 'update_time', title: '更新时间', search: false},
-                    {width: 250, title: '操作', templet: ea.table.tool, operat: [
-                        [
-                            {
-                                text: '一级代理',
-                                url: `${init.index_url}?level=1`,
-                                method: 'open',
-                                auth: 'index',
-                                extend: 'data-full="true"',
-                                class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            },
-                            {
-                                text: '二级代理',
-                                url: `${init.index_url}?level=2`,
-                                method: 'open',
-                                auth: 'index',
-                                extend: 'data-full="true"',
-                                class: 'layui-btn layui-btn-xs layui-btn-normal',
-                            }],
-                        'edit',
-                        'delete'
-                    ]},
+                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'order_sn', title: '订单号'},                    {field: 'user_id', title: '用户ID'},                    {field: 'service_id', title: '服务ID'},                    {field: 'type', title: '类型：1-单次，2-套餐'},                    {field: 'total_fee', title: '订单金额'},                    {field: 'pay_type', title: '支付方式：1-微信支付'},                    {field: 'status', title: '订单状态：0-待支付，1-已支付，2-已退款3-已完成'},                    {field: 'total_count', title: '总次数'},                    {field: 'used_count', title: '已使用次数'},                    {field: 'create_time', title: '创建时间'},                    {field: 'pay_time', title: '支付时间'},                    {field: 'expire_time', title: '过期时间'},                    {field: 'coupon_id', title: '优惠券ID'},                    {width: 250, title: '操作', templet: ea.table.tool},
                 ]],
             });
 
@@ -94,13 +58,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     }], 'export',
                 ],
                 cols: [[
-                    {type: 'checkbox'},
-                    {field: 'id', title: 'id'},
-                    {field: 'nickname', title: '用户昵称'},
-                    {field: 'avatar', search: 'select', selectList: notes?.avatar || {}, title: '用户头像'},
-                    // {field: 'phone', title: '手机号码'},
-                    {field: 'create_time', title: '创建时间'},
-                    {field: 'update_time', title: '更新时间'},
+                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'order_sn', title: '订单号'},                    {field: 'user_id', title: '用户ID'},                    {field: 'service_id', title: '服务ID'},                    {field: 'type', title: '类型：1-单次，2-套餐'},                    {field: 'total_fee', title: '订单金额'},                    {field: 'pay_type', title: '支付方式：1-微信支付'},                    {field: 'status', title: '订单状态：0-待支付，1-已支付，2-已退款3-已完成'},                    {field: 'total_count', title: '总次数'},                    {field: 'used_count', title: '已使用次数'},                    {field: 'create_time', title: '创建时间'},                    {field: 'pay_time', title: '支付时间'},                    {field: 'expire_time', title: '过期时间'},                    {field: 'coupon_id', title: '优惠券ID'},
                     {
                         width: 250,
                         title: '操作',

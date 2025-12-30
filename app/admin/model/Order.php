@@ -4,22 +4,21 @@ namespace app\admin\model;
 
 use app\common\model\TimeModel;
 
-class User extends TimeModel
+class Order extends TimeModel
 {
 
     protected function getOptions(): array
     {
         return [
-            'name'       => "user",
+            'name'       => "order",
             'table'      => "",
             'deleteTime' => false,
         ];
     }
 
     public static array $notes = [
-      'level' => [
-          1 => '一级分销',
-          2 => '二级分销',
-      ],
-    ];
+];
+
+    
+
 }

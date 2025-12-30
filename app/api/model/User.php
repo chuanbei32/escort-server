@@ -12,4 +12,20 @@ class User extends Model
     protected $autoWriteTimestamp = 'datetime';
     protected $createTime = 'create_time';
     protected $updateTime = 'update_time';
+
+    /**
+     * avatar 获取器
+     * @param $value
+     * @return string
+     */
+    public function getAvatarAttr($value)
+    {
+        if (empty($value)) return $value;
+        if (str_starts_with($value, '/')) {
+            return request()->domain() . $value;
+        } elseif (!str_starts_with($value, 'http')) {
+            return request()->domain() . '/' . $value;
+        }
+        return $value;
+    }
 }
