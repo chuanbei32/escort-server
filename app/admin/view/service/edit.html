@@ -16,13 +16,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">服务描述</label>
             <div class="layui-input-block">
-                <input type="text" name="description" class="layui-input" lay-verify="required" placeholder="请输入服务描述" value="{$row.description|default=''}">
+                <textarea name="description" class="layui-input" lay-verify="required|len50" placeholder="请输入服务描述" rows="10">{$row.description|default=''}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label required">服务图片URL</label>
+            <label class="layui-form-label required">服务图片</label>
             <div class="layui-input-block layuimini-upload">
-                <input name="image_url" class="layui-input layui-col-xs6"   placeholder="请上传服务图片URL" value="{$row.image_url|default=''}">
+                <input name="image_url" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传服务图片" value="{$row.image_url|default=''}">
                 <div class="layuimini-upload-btn">
                     <span><a class="layui-btn" data-upload="image_url" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
                     <span><a class="layui-btn layui-btn-normal" id="select_image_url" data-upload-select="image_url" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
@@ -30,10 +30,13 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">服务详情图片URL，JSON格式</label>
-            <div class="layui-input-block">
-                {:editor_textarea($row["detail_images"],"detail_images","服务详情图片URL，JSON格式")}
-
+            <label class="layui-form-label required">服务详情图片</label>
+            <div class="layui-input-block layuimini-upload">
+                <input name="detail_images" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传服务详情图片" value="{$row.detail_images|default=''}">
+                <div class="layuimini-upload-btn">
+                    <span><a class="layui-btn" data-upload="detail_images" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image" data-upload-sign=""><i class="fa fa-upload"></i> 上传</a></span>
+                    <span><a class="layui-btn layui-btn-normal" id="select_detail_images" data-upload-select="detail_images" data-upload-number="more" data-upload-mimetype="image/*" data-upload-sign=""><i class="fa fa-list"></i> 选择</a></span>
+                </div>
             </div>
         </div>
         <div class="hr-line"></div>

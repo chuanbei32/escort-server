@@ -12,22 +12,49 @@ define(["jquery", "easy-admin"], function ($, ea) {
         recycle_url: 'service/recycle',
     };
 
+    var form = layui.form;
+
     return {
 
         index: function () {
             ea.table.render({
                 init: init,
                 cols: [[
-                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'name', title: '服务名称'},                    {field: 'price', title: '服务价格'},                    {field: 'image_url', title: '服务图片URL', templet: ea.table.image},                    {width: 250, title: '操作', templet: ea.table.tool},
+                    {type: 'checkbox'},
+                    {field: 'id', title: 'id', search: false},
+                    {field: 'name', title: '服务名称'},
+                    {field: 'price', title: '服务价格', search: false},
+                    {field: 'image_url', title: '套餐图片', search: false, templet: ea.table.image},
+                    {field: 'create_time', title: '创建时间', search: false},
+                    {field: 'update_time', title: '更新时间', search: false},
+                    {width: 250, title: '操作', templet: ea.table.tool},
                 ]],
             });
 
             ea.listen();
         },
         add: function () {
+
+            form.verify({
+                len50: function (value) {
+                    if (value.length > 50) {
+                        return '服务描述不能超过50个字符';
+                    }
+                }
+            });
+
             ea.listen();
         },
         edit: function () {
+
+            form.verify({
+                len50: function (value) {
+                    if (value.length > 50) {
+                        return '服务描述不能超过50个字符';
+                    }
+                }
+            });
+
             ea.listen();
         },
         recycle: function () {
@@ -58,7 +85,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     }], 'export',
                 ],
                 cols: [[
-                    {type: 'checkbox'},                    {field: 'id', title: 'id'},                    {field: 'name', title: '服务名称'},                    {field: 'price', title: '服务价格'},                    {field: 'image_url', title: '服务图片URL', templet: ea.table.image},
+                    {type: 'checkbox'},
+                    {field: 'id', title: 'id'},
+                    {field: 'name', title: '服务名称'},
+                    {field: 'price', title: '服务价格'},
+                    {field: 'image_url', title: '服务图片', templet: ea.table.image},
+                    {field: 'create_time', title: '创建时间'},
+                    {field: 'update_time', title: '更新时间'},
                     {
                         width: 250,
                         title: '操作',
