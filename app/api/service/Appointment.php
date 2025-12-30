@@ -40,7 +40,7 @@ class Appointment
             // 2. 先创建预约信息 (暂时将 order_id 设为 0)
             $data['user_id'] = $userId;
             $data['order_id'] = 0;
-            $data['status'] = 0; // 待确认
+            $data['status'] = 1; // 待确认
             $appointment = AppointmentModel::create($data);
 
             // 3. 计算金额并处理优惠券
@@ -123,7 +123,7 @@ class Appointment
 
             // 2. 创建预约信息
             $data['user_id'] = $userId;
-            $data['status'] = 0; // 待确认
+            $data['status'] = 1; // 待确认
             
             // 补充订单中的服务信息
             $data['type'] = $order->type;
