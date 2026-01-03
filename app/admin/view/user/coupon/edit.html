@@ -1,0 +1,37 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_id" class="layui-input" lay-verify="required" placeholder="请输入用户ID" value="{$row.user_id|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">优惠券ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="coupon_id" class="layui-input" lay-verify="required" placeholder="请输入优惠券ID" value="{$row.coupon_id|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：0-未使用，1-已使用，2-已过期</label>
+            <div class="layui-input-block">
+                {foreach $notes['status'] as $k=>$v}
+                <input type="radio" name="status" value="{$k}" title="{$v}" {if $row.status==$k}checked{/if}>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">使用时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="used_time" data-date="" data-date-type="date" class="layui-input"  placeholder="请输入使用时间" value="{$row.used_time|default=''}">
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </form>
+</div>
