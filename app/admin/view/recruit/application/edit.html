@@ -1,0 +1,81 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" class="layui-input" lay-verify="required" placeholder="请输入姓名" value="{$row.name|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别：1-男，0-女</label>
+            <div class="layui-input-block">
+                {foreach $notes['gender'] as $k=>$v}
+                <input type="radio" name="gender" value="{$k}" title="{$v}" {if $row.gender==$k}checked{/if}>
+                {/foreach}
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">出生日期</label>
+            <div class="layui-input-block">
+                <input type="text" name="birth_date" data-date="" data-date-type="date" class="layui-input" lay-verify="required" placeholder="请输入出生日期" value="{$row.birth_date|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" class="layui-input" lay-verify="required" placeholder="请输入联系电话" value="{$row.phone|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">学历</label>
+            <div class="layui-input-block">
+                <input type="text" name="education" class="layui-input" lay-verify="required" placeholder="请输入学历" value="{$row.education|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">所在地区</label>
+            <div class="layui-input-block">
+                <input type="text" name="region" class="layui-input" lay-verify="required" placeholder="请输入所在地区" value="{$row.region|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">常住医院</label>
+            <div class="layui-input-block">
+                <input type="text" name="hospital" class="layui-input" lay-verify="required" placeholder="请输入常住医院" value="{$row.hospital|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">擅长科室</label>
+            <div class="layui-input-block">
+                <input type="text" name="specialty" class="layui-input" lay-verify="required" placeholder="请输入擅长科室" value="{$row.specialty|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">简历</label>
+            <div class="layui-input-block layuimini-upload">
+                <input name="resume_url" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传简历" value="{$row.resume_url|default=''}">
+                <div class="layuimini-upload-btn">
+                    <span><a class="layui-btn" data-upload="resume_url" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                    <span><a class="layui-btn layui-btn-normal" id="select_resume_url" data-upload-select="resume_url" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">资质证书</label>
+            <div class="layui-input-block layuimini-upload">
+                <input name="certificate_url" class="layui-input layui-col-xs6" lay-verify="required"  placeholder="请上传资质证书" value="{$row.certificate_url|default=''}">
+                <div class="layuimini-upload-btn">
+                    <span><a class="layui-btn" data-upload="certificate_url" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                    <span><a class="layui-btn layui-btn-normal" id="select_certificate_url" data-upload-select="certificate_url" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </form>
+</div>
