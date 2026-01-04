@@ -40,9 +40,12 @@
         <div class="layui-form-item">
             <label class="layui-form-label">订单状态：0-待支付，1-已支付，2-已退款3-已完成</label>
             <div class="layui-input-block">
-                <input type="text" name="status" class="layui-input"  placeholder="请输入订单状态：0-待支付，1-已支付，2-已退款3-已完成" value="0">
+                {foreach $notes['status'] as $k=>$v}
+                <input type="radio" name="status" value="{$k}" title="{$v}" >
+                {/foreach}
             </div>
         </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">总次数</label>
             <div class="layui-input-block">
@@ -62,6 +65,12 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">支付平台交易流水号</label>
+            <div class="layui-input-block">
+                <input type="text" name="transaction_id" class="layui-input"  placeholder="请输入支付平台交易流水号" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">过期时间</label>
             <div class="layui-input-block">
                 <input type="text" name="expire_time" class="layui-input"  placeholder="请输入过期时间" value="">
@@ -70,9 +79,12 @@
         <div class="layui-form-item">
             <label class="layui-form-label">优惠券ID</label>
             <div class="layui-input-block">
-                <input type="text" name="coupon_id" class="layui-input"  placeholder="请输入优惠券ID" value="">
+                {foreach $notes['coupon_id'] as $k=>$v}
+                <input type="radio" name="coupon_id" value="{$k}" title="{$v}" >
+                {/foreach}
             </div>
         </div>
+
         <div class="hr-line"></div>
         <div class="layui-form-item text-center">
             <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
