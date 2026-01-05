@@ -81,9 +81,7 @@ class Appointment extends AdminController
             $rule = [];
             $this->validate($post, $rule);
             try {
-                Db::transaction(function() use ($post, $row, &$save) {
-                    $save = $row->save($post);
-                });
+                $save = $row->save($post);
             }catch (\Exception $e) {
                 $this->error('保存失败');
             }
