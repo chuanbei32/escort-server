@@ -106,6 +106,7 @@ class Appointment
             // 1. 获取订单并验证
             $order = OrderModel::where([
                 ['id', '=', $orderId],
+                ['status', '=', 1],
                 ['user_id', '=', $userId]
             ])->find();
 
