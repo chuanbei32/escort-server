@@ -65,6 +65,7 @@
             <label class="layui-form-label">陪诊师</label>
             <div class="layui-input-block">
                 <select name="escort_id" lay-verify="required">
+                    <option value="">请选择陪诊师</option>
                     {foreach $ecsort as $key=>$vo}
                     <option value="{$key}" {if $row.escort_id==$key}selected=""{/if}>{$vo}</option>
                     {/foreach}
