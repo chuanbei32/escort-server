@@ -68,6 +68,7 @@ class Appointment extends AdminController
             ];
             return json($data);
         }
+        $this->assign('ecsort', EscortApplication::column('name', 'id'));
         return $this->fetch();
     }
 
@@ -78,6 +79,8 @@ class Appointment extends AdminController
         empty($row) && $this->error('数据不存在');
         if ($request->isPost()) {
             $post = $request->post();
+            unset($post['service_id']);
+            unset($post['hospital_id']);
             $rule = [];
             $this->validate($post, $rule);
             try {
