@@ -41,10 +41,10 @@ class Appointment extends AdminController
             foreach ($where as $key => $value) {
                 switch ($value[0]) {
                     case 'status':
-                        $newWhere['status'] = $value[2];
+                        $value[2] == '--全部--' ?: $newWhere['status'] = $value[2];
                         break;
                     case 'patient_name':
-                        $newWhere['patient_name'] = $value[2];
+                        $value[2] == '--全部--' ?: $newWhere['patient_name'] = $value[2];
                         break;
                     case 'service_name':
                         $newWhere['service_id'] = Service::where('name', 'like', "%{$value[2]}%")->value('id');
@@ -68,7 +68,6 @@ class Appointment extends AdminController
             ];
             return json($data);
         }
-        $this->assign('ecsort', EscortApplication::column('name', 'id'));
         return $this->fetch();
     }
 
@@ -91,6 +90,7 @@ class Appointment extends AdminController
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
         $this->assign('row', $row);
+        $this->assign('ecsort', EscortApplication::column('name', 'id'));
         return $this->fetch();
     }
 }
