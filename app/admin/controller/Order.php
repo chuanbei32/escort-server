@@ -135,7 +135,7 @@ class Order extends AdminController
                             UserCoupon::where('id', $order->coupon_id)->update([
                                 'status'    => 0,
                                 'used_time' => null,
-                                'order_id'  => 0,
+                                'order_id'  => null,
                             ]);
                         }
 
