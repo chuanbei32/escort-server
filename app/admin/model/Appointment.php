@@ -34,6 +34,7 @@ class Appointment extends TimeModel
             0 => '待预约',
             1 => '使用中',
             2 => '已取消',
+            3 => '已完成'
         ],
     ];
 
