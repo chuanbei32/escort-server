@@ -111,7 +111,7 @@ class Appointment
             ])->find();
 
             if (!$order) {
-                throw new \Exception('订单不存在');
+                throw new \Exception('订单不存在或状态异常');
             }
 
             if ($order->status == 0) {
