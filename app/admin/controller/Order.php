@@ -95,7 +95,7 @@ class Order extends AdminController
 
             foreach ($orders as $order) {
                 // 只有已支付的订单才能退款
-                if ($order->status != 1) {
+                if ($order->getData('status') != 1) {
                     $failCount++;
                     $lastError = "订单 {$order->order_sn} 状态不正确，无法退款";
                     continue;

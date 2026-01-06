@@ -96,6 +96,7 @@ class Payment
                 if ($order && $order->status == 0) {
                     $order->status = 1; // 已支付
                     $order->pay_time = date('Y-m-d H:i:s');
+                    // $order->transaction_id = $message['transaction_id'];
                     $order->save();
                     
                     Log::info('订单支付成功：' . $orderId);
