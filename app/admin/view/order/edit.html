@@ -29,7 +29,7 @@
             <label class="layui-form-label">订单状态</label>
             <div class="layui-input-block">
                 {foreach $notes['status'] as $k=>$v}
-                <input type="radio" readonly name="status" value="{$k}" title="{$v}" {if $row.status==$k}checked{/if}>
+                <input type="radio" name="status" value="{$k}" title="{$v}" {if $row.status==$k}checked{/if}>
                 {/foreach}
             </div>
         </div>
