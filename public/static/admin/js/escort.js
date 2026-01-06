@@ -3,60 +3,32 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'user/index',
-        // add_url: 'user/add',
-        edit_url: 'user/edit',
-        delete_url: 'user/delete',
-        export_url: 'user/export',
-        modify_url: 'user/modify',
-        recycle_url: 'user/recycle',
+        index_url: 'escort/index',
+        add_url: 'escort/add',
+        edit_url: 'escort/edit',
+        delete_url: 'escort/delete',
+        export_url: 'escort/export',
+        modify_url: 'escort/modify',
+        recycle_url: 'escort/recycle',
     };
 
     return {
 
         index: function () {
-            let urlParams = new URLSearchParams(window.location.search);
-            let level = urlParams.get('level') || 0;
-            let id = urlParams.get('id') || 0;
-
             ea.table.render({
                 init: init,
-                url: ea.url(`${init.index_url}?level=${level}&id=${id}`),
-                toolbar: ['refresh', 'delete', 'export'],
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id', search: false},
-                    {field: 'nickname', title: '用户昵称', searchOp: "="},
-                    {field: 'level', title: '分销级别', search: 'select', selectList: notes?.level || {}, hide: true},
-                    {field: 'avatar', title: '用户头像', search: false, templet: ea.table.image},
-                    // {field: 'phone', title: '手机号码'},
-                    {field: 'total', title: '消费总金额', search: false},
-                    {field: 'level1', title: '一级分销数量', search: false},
-                    {field: 'level2', title: '二级分销数量', search: false},
+                    {field: 'name', title: '姓名'},
+                    {field: 'gender', title: '性别', search: 'select', selectList: notes?.gender || {}, search: false},
+                    {field: 'phone', title: '电话号码', search: false},
+                    {field: 'education', title: '学历', search: false},
+                    {field: 'age', title: '年龄', search: false},
+                    {field: 'experience_years', title: '工作年限', search: false},
                     {field: 'create_time', title: '创建时间', search: false},
                     {field: 'update_time', title: '更新时间', search: false},
-
-                    {width: 250, title: '操作', templet: ea.table.tool, operat: [
-                        // [
-                        //     {
-                        //         text: '一级代理',
-                        //         url: `${init.index_url}?level=1`,
-                        //         method: 'open',
-                        //         auth: 'index',
-                        //         extend: 'data-full="true"',
-                        //         class: 'layui-btn layui-btn-xs layui-btn-normal',
-                        //     },
-                        //     {
-                        //         text: '二级代理',
-                        //         url: `${init.index_url}?level=2`,
-                        //         method: 'open',
-                        //         auth: 'index',
-                        //         extend: 'data-full="true"',
-                        //         class: 'layui-btn layui-btn-xs layui-btn-normal',
-                        //     }],
-                        'edit',
-                        'delete'
-                    ]},
+                    {width: 250, title: '操作', templet: ea.table.tool},
                 ]],
             });
 
@@ -98,11 +70,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 cols: [[
                     {type: 'checkbox'},
                     {field: 'id', title: 'id'},
-                    {field: 'nickname', title: '用户昵称'},
-                    {field: 'avatar', search: 'select', selectList: notes?.avatar || {}, title: '用户头像'},
-                    // {field: 'phone', title: '手机号码'},
+                    {field: 'name', title: '陪诊姓名'},
+                    {field: 'gender', title: '性别'},
+                    {field: 'phone', title: '电话号码'},
                     {field: 'create_time', title: '创建时间'},
-                    {field: 'update_time', title: '更新时间'},
                     {
                         width: 250,
                         title: '操作',

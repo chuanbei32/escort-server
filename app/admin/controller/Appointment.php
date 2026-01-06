@@ -10,7 +10,8 @@ use app\Request;
 use think\response\Json;
 use app\admin\model\Service;
 use app\admin\model\Hospital;
-use app\admin\model\EscortApplication;
+// use app\admin\model\EscortApplication;
+use app\admin\model\Escort;
 
 #[ControllerAnnotation(title: 'appointment')]
 class Appointment extends AdminController
@@ -53,7 +54,7 @@ class Appointment extends AdminController
                         $newWhere['hospital_id'] = Hospital::where('name', 'like', "%{$value[2]}%")->value('id');
                         break;
                     case 'escort_name':
-                        $newWhere['escort_id'] = EscortApplication::where('name', 'like', "%{$value[2]}%")->value('id');
+                        $newWhere['escort_id'] = Escort::where('name', 'like', "%{$value[2]}%")->value('id');
                         break;
                 }
             }
@@ -90,7 +91,7 @@ class Appointment extends AdminController
             $save ? $this->success('保存成功') : $this->error('保存失败');
         }
         $this->assign('row', $row);
-        $this->assign('ecsort', EscortApplication::column('name', 'id'));
+        $this->assign('escort', Escort::column('name', 'id') ?? []);
         return $this->fetch();
     }
 }

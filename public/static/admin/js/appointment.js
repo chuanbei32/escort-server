@@ -22,6 +22,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {type: 'checkbox'},
                     {field: 'id', title: 'id', search: false},
                     {field: 'status', search: 'select', selectList: notes?.status || {}, searchValue: '--全部--', title: '预约状态'},
+                    {field: 'order.status', fieldAlias: 'order_status', search: 'select', selectList: notes?.ostatus || {}, searchValue: '--全部--', title: '订单状态', search: false},
                     {field: 'service.name', fieldAlias: 'service_name', title: '服务名称'},
                     {field: 'hospital.name', fieldAlias: 'hospital_name', title: '医院名称'},
                     {field: 'department', title: '科室', search: false},

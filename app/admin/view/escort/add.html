@@ -1,0 +1,48 @@
+<div class="layuimini-container">
+    <form id="app-form" class="layui-form layuimini-form">
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" class="layui-input" lay-verify="required" placeholder="请输入姓名" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="gender" value="0" title="未知" checked>
+                <input type="radio" name="gender" value="1" title="男">
+                <input type="radio" name="gender" value="2" title="女">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" class="layui-input" lay-verify="required" placeholder="请输入电话号码" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">学历</label>
+            <div class="layui-input-block">
+                <input type="text" name="education" class="layui-input" lay-verify="required" placeholder="请输入学历" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-block">
+                <input type="number" name="age" class="layui-input" lay-verify="required" placeholder="请输入年龄" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">工作年限</label>
+            <div class="layui-input-block">
+                <input type="number" name="experience_years" class="layui-input" lay-verify="required" placeholder="请输入陪诊工作年限" value="">
+            </div>
+        </div>
+        <div class="hr-line"></div>
+        <div class="layui-form-item text-center">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">重置</button>
+        </div>
+    </form>
+</div>

@@ -36,6 +36,12 @@ class Appointment extends TimeModel
             2 => '已取消',
             3 => '已完成'
         ],
+        'ostatus' => [
+            0 => '待支付',
+            1 => '已支付',
+            2 => '已退款',
+            3 => '已完成',
+        ],
     ];
 
     /**
@@ -80,7 +86,7 @@ class Appointment extends TimeModel
      */
     public function escort()
     {
-        return $this->belongsTo(EscortApplication::class, 'escort_id', 'id');
+        return $this->belongsTo(Escort::class, 'escort_id', 'id');
     }
 
     

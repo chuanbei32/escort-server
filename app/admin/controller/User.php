@@ -34,24 +34,45 @@ class User extends AdminController
             }
             list($page, $limit, $where) = $this->buildTableParams();
             
-            $level = $request->param('level', 0);
-            $id = $request->param('id', 0);
+            // $level = $request->param('level', 0);
+            // $id = $request->param('id', 0);
 
-            if ($level && $id) {
-                switch ($level) {
-                    case 1:
-                        $where['parent_id'] = $id;
+            // if ($level && $id) {
+            //     switch ($level) {
+            //         case 1:
+            //             $where['parent_id'] = $id;
+            //             break;
+            //         case 2:
+            //             $where[] = ['parent_id', 'in', implode(',', self::$model::where('parent_id', $id)->column('id'))];
+            //             break;
+            //     }
+            // }
+
+            $newWhere = [];
+            foreach ($where as $key => $value) {
+                switch ($value[0]) {
+                    case 'nickname':
+                        $newWhere['nickname'] = trim($value[2]);
+                        // $newWhere[] = ['id', self::$model::where('nickname', 'like', "%{$value[2]}%")->column('id')];
                         break;
-                    case 2:
-                        $where[] = ['parent_id', 'in', implode(',', self::$model::where('parent_id', $id)->column('id'))];
+                    case 'level':
+                        if (empty($newWhere)) {
+                            $this->error('请先输入用户昵称');
+                        }
+                        if ($value[2] == 1) {
+                            $newWhere['parent_id'] = self::$model::where('nickname', $newWhere['nickname'])->value('id');
+                        } else {
+                            $newWhere[] = ['parent_id', 'in', implode(',', self::$model::where('parent_id', self::$model::where('nickname', $newWhere['nickname'])->value('id'))->column('id'))];
+                        }
+                        unset($newWhere['nickname']);
                         break;
                 }
             }
 
-            $count = self::$model::where($where)->count();
+            $count = self::$model::where($newWhere)->count();
             $tableName = self::$model->getTable();
             $orderTable = (new \app\admin\model\Order())->getTable();
-            $list  = self::$model::where($where)
+            $list  = self::$model::where($newWhere)
                 ->field([
                     '*',
                     "IFNULL((SELECT COUNT(*) FROM {$tableName} AS first_level WHERE first_level.parent_id = {$tableName}.id), 0) AS level1",
