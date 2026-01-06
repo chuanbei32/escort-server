@@ -34,6 +34,11 @@ class Order extends TimeModel
         return $data['coupon_id'] != 0 ? 1 : 0;
     }
 
+    protected function getStatusAttr($value, $data): string
+    {
+        return $this::$notes['status'][$value] ?? '';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
