@@ -34,7 +34,7 @@ class ServicePackage extends Model
      * @param $value
      * @return array
      */
-    public function getContentAttr($value)
+    public function getDetailImagesAttr($value)
     {
         if (empty($value)) return [];
         $images = explode('|', $value);
