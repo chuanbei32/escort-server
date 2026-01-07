@@ -34,7 +34,7 @@ class ServicePackage extends Model
      * @param $value
      * @return array
      */
-    public function getDetailImagesAttr($value)
+    public function getContentAttr($value)
     {
         if (empty($value)) return [];
         $images = explode('|', $value);
@@ -48,4 +48,26 @@ class ServicePackage extends Model
         }
         return $images;
     }
+
+        /**
+     * detailimages 获取器
+     * @param $value
+     * @param $data
+     * @return array
+     */
+    public function getDetailImagesAttr($value, $data)
+    {
+        if (empty($data['content'])) return [];
+        $images = explode('|', $data['content']);
+        $domain = request()->domain();
+        foreach ($images as &$image) {
+            if (str_starts_with($image, '/')) {
+                $image = $domain . $image;
+            } elseif (!str_starts_with($image, 'http')) {
+                $image = $domain . '/' . $image;
+            }
+        }
+        return $images;
+    }
+
 }

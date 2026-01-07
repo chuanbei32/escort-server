@@ -30,7 +30,7 @@ class Service extends Model
     }
 
     /**
-     * content 获取器
+     * detailimages 获取器
      * @param $value
      * @return array
      */

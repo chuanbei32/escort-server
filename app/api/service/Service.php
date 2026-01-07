@@ -41,7 +41,8 @@ class Service
     public function getServiceDetail(int $id, int $type = 1)
     {
         if ($type == 2) {
-            return ServicePackageModel::where('id', $id)
+            return ServicePackageModel::withAttr('detailimages')
+                ->where('id', $id)
                 ->where('status', 1)
                 ->find();
         }
