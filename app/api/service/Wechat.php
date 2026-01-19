@@ -51,6 +51,10 @@ class Wechat
         if ($request->isGet() && $request->has('echostr')) {
             Log::info('处理微信服务器 URL 验证');
             $psrResponse = $server->serve();
+            
+            // 清除之前的输出缓冲区，防止干扰
+            if (ob_get_length()) ob_clean();
+            
             return $this->psr7ToThinkResponse($psrResponse);
         }
 
@@ -69,6 +73,10 @@ class Wechat
 
             try {
                 $psrResponse = $server->serve();
+                
+                // 清除之前的输出缓冲区
+                if (ob_get_length()) ob_clean();
+                
                 return $this->psr7ToThinkResponse($psrResponse);
             } catch (\Exception $e) {
                 Log::error('小程序服务器响应异常：' . $e->getMessage());
@@ -181,5 +189,29 @@ class Wechat
         }
 
         return response($content, $statusCode, $headers);
+    }
+
+    /**
+     * 发送客服消息 (异步 JSON 结构)
+     * @param string $openid
+     * @param string $content
+     * @return void
+     */
+    protected function sendCustomMessage(string $openid, string $content)
+    {
+        if (empty($openid)) return;
+
+        $client = $this->app->getClient();
+        $response = $client->post('cgi-bin/message/custom/send', [
+            'json' => [
+                'touser' => $openid,
+                'msgtype' => 'text',
+                'text' => [
+                    'content' => $content,
+                ],
+            ],
+        ]);
+
+        Log::info('发送客服消息结果: ' . $response->getContent());
     }
 }
