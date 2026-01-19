@@ -158,11 +158,24 @@ class Wechat
     protected function handleText($message, $next)
     {
         $content = $message['Content'] ?? '';
-        Log::info('收到用户文本消息: ' . $content);
+        $openid = $message['FromUserName'] ?? '';
+        Log::info(sprintf('收到用户文本消息: %s, 来自: %s', $content, $openid));
         
         // 可以在这里添加简单的关键词回复逻辑
         if ($content === '客服' || $content === '人工') {
-            return '正在为您转接人工客服，请稍候...';
+            $replyContent = '正在为您转接人工客服，请稍候...';
+
+            Log::info('匹配到关键词，尝试通过两种方式回复');
+
+            // 1. 客服消息场景 (异步推送)
+            try {
+                $this->sendCustomMessage($openid, $replyContent);
+            } catch (\Exception $e) {
+                Log::error('发送客服消息失败: ' . $e->getMessage());
+            }
+
+            // 2. 服务端被动回复场景 (同步返回)
+            return $replyContent;
         }
 
         return $next($message);
