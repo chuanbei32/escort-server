@@ -6,6 +6,9 @@ use think\facade\Route;
 Route::group('v1', function () {
     // --- 公开接口 ---
     
+    // 微信公众号服务器回调
+    Route::any('wechat/server', 'Wechat/server');
+
     // 登录模块
     Route::group('login', function () {
         Route::post('wechat', 'Login/wechat');
@@ -37,9 +40,6 @@ Route::group('v1', function () {
     Route::group('payment', function () {
         Route::any('notify', 'Payment/notify');
     });
-
-    // 微信公众号服务器回调
-    Route::any('wechat/server', 'Wechat/server');
 
     // --- 需授权接口 ---
     Route::group('', function () {
