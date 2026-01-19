@@ -38,6 +38,9 @@ Route::group('v1', function () {
         Route::any('notify', 'Payment/notify');
     });
 
+    // 微信公众号服务器回调
+    Route::any('wechat/server', 'Wechat/server');
+
     // --- 需授权接口 ---
     Route::group('', function () {
         // 预约模块

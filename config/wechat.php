@@ -1,9 +1,11 @@
 <?php
 
 return [
-    'mini_program' => [
-        'app_id' => env('WECHAT_MINIPROGRAM_APPID', ''),
-        'secret' => env('WECHAT_MINIPROGRAM_SECRET', ''),
+    'mini_program'     => [
+        'app_id'  => env('WECHAT_MINIPROGRAM_APPID', ''),
+        'secret'  => env('WECHAT_MINIPROGRAM_SECRET', ''),
+        'token'   => env('WECHAT_MINIPROGRAM_TOKEN', ''),
+        'aes_key' => env('WECHAT_MINIPROGRAM_AES_KEY', ''),
     ],
     'payment'      => [
         'app_id'               => env('WECHAT_PAY_APPID', ''),
