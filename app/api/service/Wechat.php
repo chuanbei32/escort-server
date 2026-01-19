@@ -112,11 +112,28 @@ class Wechat
     protected function handleEvent($message, $next)
     {
         $event = $message['Event'] ?? '';
-        Log::info('处理微信事件: ' . $event);
+        $openid = $message['FromUserName'] ?? '';
+        Log::info(sprintf('收到微信事件: %s, 来自: %s', $event, $openid));
 
         switch ($event) {
             case 'user_enter_tempsession':
-                return '您好！欢迎使用我们的陪诊服务。请问有什么可以帮您？您可以直接在此输入您的问题，我们的客服人员会尽快为您解答。';
+                $content = '您好！欢迎使用我们的陪诊服务。请问有什么可以帮您？您可以直接在此输入您的问题，我们的客服人员会尽快为您解答。';
+                
+                Log::info('用户进入客服会话，尝试通过两种方式回复');
+
+                // 1. 客服消息场景 (异步推送，JSON 结构)
+                // 这种方式最可靠，特别是在小程序场景下
+                try {
+                    $this->sendCustomMessage($openid, $content);
+                } catch (\Exception $e) {
+                    Log::error('发送客服消息失败: ' . $e->getMessage());
+                }
+
+                // 2. 服务端被动回复场景 (同步返回，XML 结构)
+                // 根据 EasyWeChat 6.x 文档，直接返回字符串，框架会自动转为 XML 文本消息
+                // 如果返回 'success'，则不进行任何回复。这里我们尝试返回内容以增加成功率。
+                return $content;
+                
             default:
                 Log::debug('未处理的事件类型: ' . $event);
         }
