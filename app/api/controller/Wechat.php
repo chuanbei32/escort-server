@@ -35,22 +35,21 @@ class Wechat extends Base
 
         $app = new Application($config);
 
-        // 如果是 GET 请求且包含 echostr，通常是微信服务器的 URL 验证
+        // 如果是 GET 请求且包含 echostr
         if ($thinkRequest->isGet() && $thinkRequest->has('echostr')) {
             Log::info('处理微信服务器 URL 验证');
-            // 创建 Symfony Request 对象供 EasyWeChat 使用
-            $symfonyRequest = new SymfonyRequest(
-                $_GET,
-                $_POST,
-                [],
-                $_COOKIE,
-                $_FILES,
-                $_SERVER,
-                $content
-            );
-            $app->setRequestFromSymfonyRequest($symfonyRequest);
+            
+            // EasyWeChat 6.x 的正确做法
             $server = $app->getServer();
-            return $server->serve();
+            
+            // 关键点：直接返回 Symfony Response 的内容
+            $response = $server->serve();
+            
+            // 清除之前的输出缓冲区，防止 BหรือM 头或框架其他输出干扰
+            if (ob_get_length()) ob_clean(); 
+            
+            // 直接使用 ThinkPHP 的 response 助手函数，指定类型为 plain
+            return response($response->getContent())->contentType('text/plain');
         }
 
         // 如果是 POST 请求但内容为空，EasyWeChat 会抛出异常
