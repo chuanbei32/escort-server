@@ -51,4 +51,14 @@ class Service
             ->where('status', 1)
             ->find();
     }
+
+    /**
+     * 获取首页推荐服务
+     * @return mixed
+     */
+    public function getHomeRecommendService()
+    {
+        return ServiceModel::where('is_home_recommend', 1)
+            ->select();
+    }
 }

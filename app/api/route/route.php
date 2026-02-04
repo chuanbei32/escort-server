@@ -34,6 +34,7 @@ Route::group('v1', function () {
     Route::group('service', function () {
         Route::get('list', 'Service/list');
         Route::get('detail/:id/:type', 'Service/detail');
+        Route::get('home-recommend', 'Service/homeRecommend');
     });
 
     // 支付回调

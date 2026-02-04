@@ -14,6 +14,24 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">已售数量</label>
+            <div class="layui-input-block">
+                <input type="text" name="sold_count" class="layui-input" lay-verify="required" placeholder="请输入已售数量" value="{$row.sold_count|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">服务时长</label>
+            <div class="layui-input-block">
+                <input type="text" name="service_duration" class="layui-input" lay-verify="required" placeholder="请输入服务时长" value="{$row.service_duration|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">模块名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="module_name" class="layui-input" lay-verify="required" placeholder="请输入模块名称" value="{$row.module_name|default=''}">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">服务描述</label>
             <div class="layui-input-block">
                 <textarea name="description" class="layui-input" lay-verify="required|len50" placeholder="请输入服务描述" rows="10">{$row.description|default=''}</textarea>

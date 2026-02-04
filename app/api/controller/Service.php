@@ -69,4 +69,14 @@ class Service extends Base
         }
         return $this->success($info);
     }
+
+    /**
+     * 首页推荐服务
+     * @return Response
+     */
+    public function homeRecommend(): Response
+    {
+        $data = $this->service->getHomeRecommendService();
+        return $this->success($data);
+    }
 }

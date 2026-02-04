@@ -4,6 +4,8 @@ declare (strict_types = 1);
 namespace app\api\service;
 
 use app\api\model\Order as OrderModel;
+use app\api\model\Service as ServiceModel;
+use app\api\model\ServicePackage as ServicePackageModel;
 use app\api\model\User as UserModel;
 use EasyWeChat\Pay\Application;
 use think\facade\Config;
@@ -98,6 +100,15 @@ class Payment
                     $order->pay_time = date('Y-m-d H:i:s');
                     // $order->transaction_id = $message['transaction_id'];
                     $order->save();
+                    
+                    // 更新服务或套餐的已售数量
+                    if ($order->type == 1) {
+                        // 服务
+                        ServiceModel::where('id', $order->service_id)->inc('sold_count')->update();
+                    } else {
+                        // 套餐
+                        ServicePackageModel::where('id', $order->service_id)->inc('sold_count')->update();
+                    }
                     
                     Log::info('订单支付成功：' . $orderId);
                 }

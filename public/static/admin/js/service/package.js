@@ -24,6 +24,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {type: 'checkbox'},
                     {field: 'id', title: 'id', search: false},
                     {field: 'name', title: '套餐名称'},
+                    {field: 'sold_count', title: '已售数量', search: false},
                     {field: 'price', title: '套餐价格', search: false},
                     {field: 'total_count', title: '总次数', search: false},
                     {field: 'image_url', title: '套餐图片', search: false, templet: ea.table.image},
