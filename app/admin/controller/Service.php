@@ -64,15 +64,15 @@ class Service extends AdminController
         }
         try {
             Db::transaction(function() use ($post, $row) {
-                if ($post['field'] == 'is_home_recommend' && $post['value'] == 0) {
-                    // 判断是否没有推荐了，若没有不能取消。还需要根据当前id是否是推荐服务来判断，且每个module_name 下可以有一个推荐服务
-                    $hasRecommend = self::$model::where('is_home_recommend', 1)->where('id', '<>', $post['id'])->where('module_name', $row->module_name)->find();
-                    if (!$hasRecommend) {
-                        throw new \Exception('当前服务未设置为首页推荐，不能取消');
-                    }
-                }
-                // 先将所有推荐取消
-                self::$model::where('module_name', $row->module_name)->update(['is_home_recommend' => 0]);
+                // if ($post['field'] == 'is_home_recommend' && $post['value'] == 0) {
+                //     // 判断是否没有推荐了，若没有不能取消。还需要根据当前id是否是推荐服务来判断，且每个module_name 下可以有一个推荐服务
+                //     $hasRecommend = self::$model::where('is_home_recommend', 1)->where('id', '<>', $post['id'])->where('module_name', $row->module_name)->find();
+                //     if (!$hasRecommend) {
+                //         throw new \Exception('当前服务未设置为首页推荐，不能取消');
+                //     }
+                // }
+                // // 先将所有推荐取消
+                // self::$model::where('module_name', $row->module_name)->update(['is_home_recommend' => 0]);
                 $row->save([
                     $post['field'] => $post['value'],
                 ]);

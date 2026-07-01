@@ -24,7 +24,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'id', title: 'id', search: false},
                     {field: 'name', title: '服务名称'},
                     {field: 'module_name', title: '服务模块', search: false},
-                    {field: 'service_duration', title: '服务时长', search: false},
+                    {field: 'service_duration', title: '价格', search: false},
                     {field: 'service_description', title: '服务描述', search: false},
                     {field: 'sold_count', title: '已售数量', search: false},
                     {field: 'price', title: '服务价格', search: false},
@@ -41,9 +41,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
         add: function () {
 
             form.verify({
-                len50: function (value) {
-                    if (value.length > 50) {
-                        return '服务描述不能超过50个字符';
+                len1000: function (value) {
+                    if (value.length > 1000) {
+                        return '服务描述不能超过1000个字符';
                     }
                 }
             });
@@ -53,9 +53,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
         edit: function () {
 
             form.verify({
-                len50: function (value) {
-                    if (value.length > 50) {
-                        return '服务描述不能超过50个字符';
+                len1000: function (value) {
+                    if (value.length > 1000) {
+                        return '服务描述不能超过1000个字符';
                     }
                 }
             });
