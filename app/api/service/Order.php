@@ -56,7 +56,7 @@ class Order
         $info->appointments->each(function ($item) {
             $item->serviceInfo = is_object($item->serviceInfo) ? $item->serviceInfo : [];
             $item->hospital = is_object($item->hospital) ? $item->hospital : [];
-            $item->escortApplication = is_object($item->escortApplication) ? $item->escortApplication : [];
+            $item->escort = is_object($item->escort) ? $item->escort : [];
         });
 
         return $info;
