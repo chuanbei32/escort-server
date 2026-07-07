@@ -38,7 +38,7 @@ class Appointment extends Model
      * 关联陪诊师
      * @return \think\model\relation\BelongsTo
      */
-    public function escortApplication()
+    public function escort()
     {
         return $this->belongsTo(Escort::class, 'escort_id', 'id');
     }
