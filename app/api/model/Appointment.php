@@ -40,6 +40,6 @@ class Appointment extends Model
      */
     public function escortApplication()
     {
-        return $this->belongsTo(EscortApplication::class, 'escort_id', 'id');
+        return $this->belongsTo(Escort::class, 'escort_id', 'id');
     }
 }
