@@ -1,6 +1,6 @@
 {
-	"name": "escort",
-	"service": "php",
+	"name": "escort-lxh",
+	"service": "php-escort-lxh",
 	"dockerComposeFile": "docker-compose.yml",
 	"workspaceFolder": "/workspace",
 	"customizations": {

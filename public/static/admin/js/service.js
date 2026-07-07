@@ -24,7 +24,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'id', title: 'id', search: false},
                     {field: 'name', title: '服务名称'},
                     {field: 'module_name', title: '服务模块', search: false},
-                    {field: 'service_duration', title: '价格', search: false},
+                    {field: 'service_duration', title: '时长', search: false},
                     {field: 'service_description', title: '服务描述', search: false},
                     {field: 'sold_count', title: '已售数量', search: false},
                     {field: 'price', title: '服务价格', search: false},
